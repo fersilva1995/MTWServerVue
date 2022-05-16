@@ -3,7 +3,7 @@
     <h1>Adicionar Grupo</h1>
     <h2>{{ group.nome }}</h2>
 
-    <form @submit="save()" class="formAdd">
+    <form @submit.prevent="save()" class="formAdd">
       <div class="control">
         <label for="name">Nome</label>
         <input id="name" autocomplete="off" v-model.lazy="group.nome" />
@@ -14,27 +14,47 @@
         <input id="time" autocomplete="off" v-model.lazy="group.time" />
       </div>
 
-      <b-form-group
-        label="Equipamentos Disponíveis:"
-        v-slot="{ ariaDescribedby }"
-      >
+      <b-form-group label="Equipamentos Disponíveis:" v-slot="{ ariaDescribedby }">
         <b-form-checkbox-group
           id="checkbox-group-1"
-          v-model="selected"
-          :options="options"
+          v-model="equipmentsToAdd"
+          :options="equipments"
+          value-field="id"
+          text-field="nome"
           :aria-describedby="ariaDescribedby"
           name="flavour-1"
           stacked
         >
         </b-form-checkbox-group>
         <div>
-          Equipamentos: <strong>{{ selected }}</strong>
+          Equipamentos: <strong>{{ equipmentsToAdd }}</strong>
         </div>
       </b-form-group>
+
+
+       <b-form-group label="Equipamentos Adicionados:" v-slot="{ ariaDescribedby }">
+        <b-form-checkbox-group
+          id="checkbox-group-1"
+          v-model="equipmentsToRemove"
+          :options="group.equipments"
+          value-field="id"
+          text-field="nome"
+          :aria-describedby="ariaDescribedby"
+          name="flavour-1"
+          stacked
+        >
+        </b-form-checkbox-group>
+        <div>
+          Equipamentos: <strong>{{ equipmentsToRemove }}</strong>
+        </div>
+      </b-form-group>
+      <myButton type="submit" title="Salvar" buttonStyle="success" />
     </form>
+    
 
     <div class="btnArea">
-      <myButton type="submit" title="Salvar" buttonStyle="success" />
+      <myButton type="button" title="Atualizar" buttonStyle="success" @buttonAction="updateGroupEquipments()"></myButton>
+      
       <myButton
         type="button"
         title="Voltar"
@@ -49,6 +69,7 @@
 <script>
 import Button from "../shared/button/Button.vue";
 import Group from "../../domain/group/Group";
+import Equipament from "../../domain/equipment/Equipment";
 
 export default {
   components: {
@@ -58,24 +79,84 @@ export default {
   data() {
     return {
       group: new Group(),
-      selected: [],
-      options: [
-        { text: "1", value: "1" },
-        { text: "2", value: "2" },
-        { text: "3", value: "3" },
-        { text: "4", value: "4" },
-      ],
+      equipments: [],
+      equipmentsToAdd: [],
+      equipmentsToRemove: [],
     };
   },
 
+  computed: {
+
+    availableEquipments() {
+
+      return "";
+      if(this.group.equipments.length === 0) {
+         console.log("Array is empty!") 
+      } else {
+        this.group.equipments.foreach((equipment, index, array) => {
+          if(equipments.includes(equipment)) {
+            equipments.remove(equipment);
+          }
+        })
+      }
+      
+
+      return this.items;
+    }
+
+
+  },
+
   methods: {
+
     save() {
       console.log(this.group);
       this.$http
-        .post("http://172.16.2.170:83/api/Groups", this.group)
+        .post("http://172.16.2.133/groups", this.group)
         .then(() => (this.group = new Group()), (err) => console.log(err));
-    }
-  }
+    },
+
+    updateGroupEquipments() {
+
+      var addEqps = [];
+
+      for(var counter = 0; counter < this.equipmentsToAdd.length; counter++) {
+
+        this.equipments.forEach((equipment => {
+          if(equipment.id === this.equipmentsToAdd[0]) {
+            this.group.equipments.push(equipment);
+            addEqps.push(equipment);
+          }
+        }))
+
+      }
+
+      this.equipments = this.equipments.filter(equipment => {
+        return !addEqps.includes(equipment);
+      })
+
+      console.log(this.equipments);
+      console.log(this.group.equipments);
+
+      this.equipmentsToAdd = [];
+      this.equipmentsToRemove = [];
+
+    
+    },
+
+
+  },
+
+  created() {
+    this.$http
+      .get("http://172.16.2.133/equipments")
+      .then((res) => res.json())
+      .then(function(equipments) { 
+          this.equipments = equipments; 
+      },
+        (err) => console.log(err)
+      );
+  },
 };
 </script>
 

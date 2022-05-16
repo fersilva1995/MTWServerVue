@@ -63,15 +63,5 @@ export default {
         ]
       }
     },
-
-    created() {
-      this.$http
-        .get("http://172.16.2.170:83/api/Groups")
-        .then((res) => res.json())
-        .then(
-        (items) => (this.items = items),
-        (err) => console.log(err)
-      );
-    }
   }
 </script>

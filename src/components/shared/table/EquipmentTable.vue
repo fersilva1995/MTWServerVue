@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-table small striped :items="items" :fields="fields" :dark="true">
+    <b-table small striped :items="items" :dark="true">
       <template #cell(profileType)="data">
         {{ data.item.profile.name }}
       </template>
@@ -34,10 +34,12 @@ export default {
 
   created() {
     this.$http
-      .get("https://172.16.2.170:83/api/Users")
+      .get("http://172.16.2.133/equipments")
       .then((res) => res.json())
-      .then(
-        (items) => (this.items = items),
+      .then(function(items) { 
+          this.items = items; 
+          console.log(this.items);
+      },
         (err) => console.log(err)
       );
   },

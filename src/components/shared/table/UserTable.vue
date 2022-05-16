@@ -35,7 +35,7 @@
     },
 
     created() {
-      this.$http.get('http://172.16.2.170:83/api/Users')
+      this.$http.get('http://172.16.2.133/Users')
         .then(res => res.json())
         .then(items => this.items = items, err => console.log(err));
     }
