@@ -70,12 +70,19 @@
 import Button from "../shared/button/Button.vue";
 import Group from "../../domain/group/Group";
 import Equipament from "../../domain/equipment/Equipment";
+import GroupService from "../../domain/group/GroupService";
+import EquipmentService from "../../domain/equipment/EquipmentService"
 
 export default {
   components: {
     myButton: Button,
   },
 
+  props: {
+    id: 0,
+  },
+
+  
   data() {
     return {
       group: new Group(),
@@ -111,9 +118,9 @@ export default {
 
     save() {
       console.log(this.group);
-      this.$http
-        .post("http://172.16.2.133/groups", this.group)
-        .then(() => (this.group = new Group()), (err) => console.log(err));
+      this.groupService
+          .insert(this.group)
+          .then(() => (this.group = new Group()), (err) => console.log(err));
     },
 
     updateGroupEquipments() {
@@ -148,14 +155,27 @@ export default {
   },
 
   created() {
-    this.$http
-      .get("http://172.16.2.133/equipments")
-      .then((res) => res.json())
+
+    console.log(this.id);
+    this.equipmenteService = new EquipmentService(this.$resource);
+    this.groupService = new GroupService(this.$resource);
+
+    if(this.id) {
+      this.groupService
+        .search(this.id)
+        .then(function(group) {
+          this.group = group.value;
+          console.log(this.group);
+        });
+    }
+    
+
+    this.equipmenteService
+      .list()
       .then(function(equipments) { 
           this.equipments = equipments; 
-      },
-        (err) => console.log(err)
-      );
+        },
+        (err) => console.log(err));
   },
 };
 </script>

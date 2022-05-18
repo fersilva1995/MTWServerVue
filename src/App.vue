@@ -1,9 +1,13 @@
 <template>
   <div>
-    <navbar></navbar>
+    
+    <navbar>
+   
+    </navbar>
       <sidebar :routes="routes">
       </sidebar>
-      <contentVue>      
+      <contentVue>     
+        <language></language> 
         <router-view></router-view>
       </contentVue>
   </div>
@@ -15,6 +19,7 @@ import UserTable    from './components/shared/table/UserTable.vue';
 import Navbar       from './components/shared/navbar/Navbar.vue'
 import Sidebar      from './components/shared/sidebar/Sidebar.vue';
 import Content      from './components/shared/content/Content.vue';
+import Language     from './components/shared/language/Language.vue';
 import { routes }   from './routes';
 
 export default {
@@ -24,7 +29,8 @@ export default {
     'userTable' : UserTable,
     'contentVue' : Content,
     'navbar' : Navbar,
-    'sidebar' : Sidebar
+    'sidebar' : Sidebar,
+    'language' : Language,
   },
 
   data() {

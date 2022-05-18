@@ -2,7 +2,7 @@
   <div>
     <b-table :items="items" :fields="fields" dark 
     borderless striped small responsive="sm">
-      <template #cell(equipamentos)="row">
+      <template #cell(show_details)="row">
         <b-button pill variant="secondary" size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? "Esconder" : "Mostrar" }}
         </b-button>
@@ -36,7 +36,10 @@
 
 <script>
 
+import Service from '../../../domain/group/GroupService';
+
 export default {
+
       data() {
       return {
         fields: [
@@ -63,5 +66,16 @@ export default {
         ]
       }
     },
+
+    created() {
+
+      this.service = new Service(this.$resource);
+
+      this.service
+        .list()
+        .then(items => this.items = items, err => this.mensagem = err.message);
+    }
+
+    
   }
 </script>

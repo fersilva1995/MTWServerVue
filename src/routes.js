@@ -10,7 +10,6 @@ export const routes = [
     { path: '/equipment', component: Equipment, title: 'Equipamentos', icon: 'nav-icon fas fa-cubes' },
     { path: '/user', component: User, title: 'Usuários', icon: 'nav-icon fas fa-users' },
     { path: '/group', component: Group, title: 'Grupos', icon: 'nav-icon fas fa-object-group' },
-    { path: '/groupAdd', component: GroupAdd, title: '', icon: '' }
 ];
 
 
