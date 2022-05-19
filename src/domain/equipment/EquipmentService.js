@@ -15,7 +15,7 @@ export default class EquipmentService {
                 });
     }
 
-    insert(equipment) {
+    update(equipment) {
         
         if(equipment.id) {
             return this._resource.update( {equipment: equipment.id}, equipment);
