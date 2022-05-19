@@ -15,5 +15,11 @@
     "enable" : "Habilitado",
     "usernameLabel" : "Usuário",
     "passwordLabel" : "Senha",
-    "createAccount": "Não tem conta ainda? Crie agora."
+    "createAccount": "Não tem conta ainda? Crie agora.",
+    "save": "Salvar",
+    "update": "Atualizar",
+    "return": "Voltar",
+    "remove": "Remover",
+    "show": "Mostrar",
+    "hide": "Esconder"
 }

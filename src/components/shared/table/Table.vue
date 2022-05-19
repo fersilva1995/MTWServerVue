@@ -6,17 +6,14 @@
       </template>
       <template #cell(details)="row">
         <b-button pill variant="secondary" size="sm" @click="ShowDetails(row)">
-          {{ row.detailsShowing ? "Esconder" : "Mostrar" }}
-        </b-button>
-        <b-button pill variant="danger" size="sm">
-          Remover
+          {{ row.detailsShowing ? $i18n.t('hide') : $i18n.t('show') }}
         </b-button>
       </template>
 
       <template #row-details="row">
         <b-card>
           <b-row class="mb-3">
-            <component :is="currentComponent" :id="row.item.id"></component>
+            <component :is="currentComponent" :id="row.item.id" @addAction="AddAction()"></component>
 
             <!--<b-col sm="2" class="text-sm-left">Equipamentos:</b-col>
             <b-col>{{ row.item.equipments }}</b-col>
@@ -85,6 +82,10 @@ export default {
       console.log(this.selectedComponent);
       this.currentComponent = 'Group';
       row.toggleDetails();
+    },
+
+    AddAction() {
+      this.items.push(new Group());
     }
   }
 

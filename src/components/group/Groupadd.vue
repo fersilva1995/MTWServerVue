@@ -48,20 +48,17 @@
           Equipamentos: <strong>{{ equipmentsToRemove }}</strong>
         </div>
       </b-form-group>
-      <myButton type="submit" title="Salvar" buttonStyle="success" />
+      
+      <div class="btnArea">
+        <myButton type="button" :title="$i18n.t('update')" buttonStyle="primary" @buttonAction="updateGroupEquipments()"></myButton>
+        <myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/>
+        <myButton type="submit" :title="$i18n.t('save')"  buttonStyle="success" />
+        <myButton type="button" :title="$i18n.t('return')" buttonStyle="light" pageLink="/group"/>
+      </div>
     </form>
     
 
-    <div class="btnArea">
-      <myButton type="button" title="Atualizar" buttonStyle="success" @buttonAction="updateGroupEquipments()"></myButton>
-      
-      <myButton
-        type="button"
-        title="Voltar"
-        buttonStyle="light"
-        pageLink="/group"
-      />
-    </div>
+
   </div>
 </template>
 
@@ -92,40 +89,25 @@ export default {
     };
   },
 
-  computed: {
-
-    availableEquipments() {
-
-      return "";
-      if(this.group.equipments.length === 0) {
-         console.log("Array is empty!") 
-      } else {
-        this.group.equipments.foreach((equipment, index, array) => {
-          if(equipments.includes(equipment)) {
-            equipments.remove(equipment);
-          }
-        })
-      }
-      
-
-      return this.items;
-    }
-
-
-  },
 
   methods: {
 
     save() {
-      console.log(this.group);
+      console.log(JSON.stringify(this.group));
       this.groupService
-          .insert(this.group)
-          .then(() => (this.group = new Group()), (err) => console.log(err));
+        .update(this.group)
+        .then((group) => {
+          console.log(group);
+          console.log(this.group);
+          this.group = group;
+        }, (err) => console.log(err));
+        
     },
 
     updateGroupEquipments() {
 
       var addEqps = [];
+      var rmvEqps = [];
 
       for(var counter = 0; counter < this.equipmentsToAdd.length; counter++) {
 
@@ -135,12 +117,31 @@ export default {
             addEqps.push(equipment);
           }
         }))
-
       }
 
       this.equipments = this.equipments.filter(equipment => {
         return !addEqps.includes(equipment);
       })
+
+      for(var counter = 0; counter < this.equipmentsToRemove.length; counter++) {
+
+         this.group.equipments.forEach((equipment => {
+          if(equipment.id === this.equipmentsToRemove[0]) {
+  
+            this.equipments.push(equipment);
+            rmvEqps.push(equipment);
+          }
+        }))
+
+      }
+
+      this.group.equipments = this.group.equipments.filter(equipment => {
+        return !rmvEqps.includes(equipment);
+      })
+
+
+
+
 
       console.log(this.equipments);
       console.log(this.group.equipments);
@@ -151,7 +152,12 @@ export default {
     
     },
 
-
+    removeGroup() {
+      console.log(this.group);
+      this.groupService
+          .erase(this.group)
+          .then(() => (this.group = new Group()), (err) => console.log(err));
+    }
   },
 
   created() {

@@ -15,5 +15,11 @@
     "enable" : "Enable",
     "usernameLabel" : "Username",
     "passwordLabel" : "Password",
-    "createAccount": "Don't have an account yet? Sign up."
+    "createAccount": "Don't have an account yet? Sign up.",
+    "save": "Save",
+    "update": "Update",
+    "return": "Return",
+    "remove": "Remove",    
+    "show": "Show",
+    "hide": "Hide"
 }

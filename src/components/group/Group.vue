@@ -53,7 +53,11 @@ export default {
 
         this.service
             .list()
-            .then(items => this.items = items, err => this.message = err.message)
+            .then((items) => {
+              this.items = items;
+              this.items.push(new Group());
+            }, 
+            err => this.message = err.message)
     },
 };
 </script>
