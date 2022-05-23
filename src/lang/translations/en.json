@@ -21,5 +21,20 @@
     "return": "Return",
     "remove": "Remove",    
     "show": "Show",
-    "hide": "Hide"
+    "hide": "Hide",
+    "user": "User",
+    "password": "Password",
+    "type": "Type",
+    "primaryRtsp": "PrimaryRtsp",
+    "secondaryRtsp": "SecondaryRtsp",
+    "streamingPrimaryRtsp": "StreamingPrimaryRtsp",
+    "streamingSecondaryRtsp": "StreamingSecondaryRtsp",
+    "status": "Status",
+    "dateTime": "DateTime",
+    "usuario": "Users",
+    "senha" : "Password",
+    "tipo": "Type",
+    "sencondRtsp" :  "SecondaryRtsp",
+    "primaryStreamRtsp" :"StreamingPrimaryRtsp",
+    "secondStreamRtsp": "StreamingSecondaryRtsp"
 }

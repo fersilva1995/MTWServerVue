@@ -21,5 +21,20 @@
     "return": "Voltar",
     "remove": "Remover",
     "show": "Mostrar",
-    "hide": "Esconder"
+    "hide": "Esconder",
+    "user": "Usuário",
+    "password": "Senha",
+    "type": "Tipo",
+    "primaryRtsp": "RTSP Primário",
+    "secondaryRtsp": "RTSP Secundário",
+    "streamingPrimaryRtsp": "RTSP de transmissão primário",
+    "streamingSecondaryRtsp": "RTSP de transmissão secundário",
+    "status": "Estado",
+    "dateTime": "Criação",
+    "usuario": "Usuário",
+    "senha" : "Senha",
+    "tipo": "Tipo",
+    "sencondRtsp" :  "RTSP Secundário",
+    "primaryStreamRtsp" :"RTSP de transmissão primário",
+    "secondStreamRtsp": "RTSP de transmissão secundário"
 }

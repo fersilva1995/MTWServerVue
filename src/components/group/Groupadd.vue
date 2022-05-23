@@ -3,7 +3,7 @@
     <h1>Adicionar Grupo</h1>
     <h2>{{ group.nome }}</h2>
 
-    <form @submit.prevent="save()" class="formAdd">
+    <form class="formAdd">
       <div class="control">
         <label for="name">Nome</label>
         <input id="name" autocomplete="off" v-model.lazy="group.nome" />
@@ -52,7 +52,7 @@
       <div class="btnArea">
         <myButton type="button" :title="$i18n.t('update')" buttonStyle="primary" @buttonAction="updateGroupEquipments()"></myButton>
         <myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/>
-        <myButton type="submit" :title="$i18n.t('save')"  buttonStyle="success" />
+        <myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="updateGroup()"/>
         <myButton type="button" :title="$i18n.t('return')" buttonStyle="light" pageLink="/group"/>
       </div>
     </form>
@@ -66,7 +66,6 @@
 <script>
 import Button from "../shared/button/Button.vue";
 import Group from "../../domain/group/Group";
-import Equipament from "../../domain/equipment/Equipment";
 import GroupService from "../../domain/group/GroupService";
 import EquipmentService from "../../domain/equipment/EquipmentService"
 
@@ -77,6 +76,7 @@ export default {
 
   props: {
     id: 0,
+    row: '',
   },
 
   
@@ -92,16 +92,23 @@ export default {
 
   methods: {
 
-    save() {
+    updateGroup() {
+
       console.log(JSON.stringify(this.group));
+
       this.groupService
         .update(this.group)
         .then((group) => {
-          console.log(group);
-          console.log(this.group);
-          this.group = group;
-        }, (err) => console.log(err));
-        
+          if(this.group.id <= 0) {
+            this.group = group;
+            this.$emit('addAction', { row: this.row, value: this.group, update: false });
+          } else {
+            this.$emit('addAction', { row: this.row, value: this.group, update: true });
+          }
+     
+        }, (err) => console.log(err));  
+
+
     },
 
     updateGroupEquipments() {
@@ -153,16 +160,20 @@ export default {
     },
 
     removeGroup() {
-      console.log(this.group);
+     
       this.groupService
-          .erase(this.group)
-          .then(() => (this.group = new Group()), (err) => console.log(err));
+          .erase(this.group.id)
+          .then(() => {  
+            console.log(this.group);
+            this.$emit('removeAction', { row: this.row, value: this.group });  
+            this.group = new Group()     
+          }
+          ,(err) => console.log(err));
     }
   },
 
   created() {
 
-    console.log(this.id);
     this.equipmenteService = new EquipmentService(this.$resource);
     this.groupService = new GroupService(this.$resource);
 
@@ -171,7 +182,6 @@ export default {
         .search(this.id)
         .then(function(group) {
           this.group = group.value;
-          console.log(this.group);
         });
     }
     

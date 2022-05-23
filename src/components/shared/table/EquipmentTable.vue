@@ -34,7 +34,7 @@ export default {
 
   created() {
     this.$http
-      .get("http://172.16.2.133/equipments")
+      .get("http://172.16.2.170:83/equipments")
       .then((res) => res.json())
       .then(function(items) { 
           this.items = items; 

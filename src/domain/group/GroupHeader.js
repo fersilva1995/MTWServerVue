@@ -1,5 +1,5 @@
-export const groupHeader = [
-    {
+export const Header = [
+      {
         key: "id",
         label: "ID",
       },

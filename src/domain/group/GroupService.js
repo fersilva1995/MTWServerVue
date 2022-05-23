@@ -18,7 +18,7 @@ export default class GroupService {
     update(group) {
         
         if(group.id) {
-            return this._resource.update( {group: group.id}, group);
+            return this._resource.update( {id: group.id}, group);
         } else {
             return this._resource.save(group).then(res => res.json(), err => {
                 console.log(err);

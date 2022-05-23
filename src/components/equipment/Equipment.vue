@@ -1,28 +1,42 @@
 <template>
   <div>
     <h1>Equipamentos</h1>
-    <addButton
-      type="button"
-      title="Adicionar"
-      @buttonAction="Add()"
-      buttonStyle="primary"
-      pageLink="equipmentAdd"
-    />
-    <equipment-table></equipment-table>
+    <dataTable :items="items" :fields="fields" selectedComponent="EquipmentComponent"/>
   </div>
 </template>
 
 <script>
-import EquipmentTable from "../shared/table/EquipmentTable.vue";
-import Button from "../shared/button/Button.vue";
+import Table from "../shared/table/Table.vue";
+import Service from '../../domain/equipment/EquipmentService';
+import Element from '../../domain/equipment/Equipment';
+import { Header } from "../../domain/equipment/EquipmentHeader"
 
 export default {
+
   components: {
-    equipmentTable: EquipmentTable,
-    addButton: Button,
+    dataTable: Table,
+  },
+
+  data() {
+    return {
+          items: [],
+          fields: Header,
+    }
+  },
+
+  created() {
+    this.service = new Service(this.$resource);
+
+    this.service
+      .list()
+      .then((items) => {
+        this.items = items;
+        this.items.push(new Element());
+      });
   },
 };
 </script>
 
-<style>
+
+<style scoped>
 </style>

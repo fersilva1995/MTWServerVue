@@ -12,6 +12,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(VueResource);
 Vue.http.options.root = 'http://172.16.2.133'
 
+
 Vue.use(VueRouter);
 Vue.use(VueI18n);
 Vue.use(BootstrapVue);

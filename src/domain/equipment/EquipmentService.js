@@ -1,18 +1,18 @@
 export default class EquipmentService {
 
     constructor(resource) {
-        this._resource = resource('equipments/{/id}');
+        this._resource = resource('equipments{/id}');
 
     }
 
     list() {
 
         return this._resource
-                .query()
-                .then(res => res.json(), err => {
-                    console.log(err);
-                    throw new Error(err.message);
-                });
+            .query()
+            .then(res => res.json(), err => {
+                console.log(err);
+                throw new Error(err.message);
+            });
     }
 
     update(equipment) {
