@@ -14,48 +14,15 @@
         <input id="time" autocomplete="off" v-model.lazy="group.time" />
       </div>
 
-      <b-form-group label="Equipamentos Disponíveis:" v-slot="{ ariaDescribedby }">
-        <b-form-checkbox-group
-          id="checkbox-group-1"
-          v-model="equipmentsToAdd"
-          :options="equipments"
-          value-field="id"
-          text-field="nome"
-          :aria-describedby="ariaDescribedby"
-          name="flavour-1"
-          stacked
-        >
-        </b-form-checkbox-group>
-        <div>
-          Equipamentos: <strong>{{ equipmentsToAdd }}</strong>
-        </div>
-      </b-form-group>
+       <h2 class="title">Cadastro de grupos</h2>
+    </form>
 
-
-       <b-form-group label="Equipamentos Adicionados:" v-slot="{ ariaDescribedby }">
-        <b-form-checkbox-group
-          id="checkbox-group-1"
-          v-model="equipmentsToRemove"
-          :options="group.equipments"
-          value-field="id"
-          text-field="nome"
-          :aria-describedby="ariaDescribedby"
-          name="flavour-1"
-          stacked
-        >
-        </b-form-checkbox-group>
-        <div>
-          Equipamentos: <strong>{{ equipmentsToRemove }}</strong>
-        </div>
-      </b-form-group>
-      
-      <div class="btnArea">
-        <myButton type="button" :title="$i18n.t('update')" buttonStyle="primary" @buttonAction="updateGroupEquipments()"></myButton>
+    <relationTable :initAvaiableElements="equipments" :initInsertedElements="group.equipments" @updateRelation="(elements) => { this.group.equipments = elements.elements }"></relationTable>
+    <div class="btnArea">
         <myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/>
         <myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="updateGroup()"/>
         <myButton type="button" :title="$i18n.t('return')" buttonStyle="light" pageLink="/group"/>
-      </div>
-    </form>
+    </div>
     
 
 
@@ -65,6 +32,7 @@
 
 <script>
 import Button from "../shared/button/Button.vue";
+import RelationTable from "../shared/table/RelationTable.vue"
 import Group from "../../domain/group/Group";
 import GroupService from "../../domain/group/GroupService";
 import EquipmentService from "../../domain/equipment/EquipmentService"
@@ -72,6 +40,7 @@ import EquipmentService from "../../domain/equipment/EquipmentService"
 export default {
   components: {
     myButton: Button,
+    relationTable: RelationTable,
   },
 
   props: {
@@ -84,16 +53,19 @@ export default {
     return {
       group: new Group(),
       equipments: [],
-      equipmentsToAdd: [],
-      equipmentsToRemove: [],
     };
   },
 
 
   methods: {
+    
+    updateRelation(elements) {
+      this.group.equipments = elements.elements;  
+    },
 
     updateGroup() {
 
+      console.log("update groups");
       console.log(JSON.stringify(this.group));
 
       this.groupService
@@ -101,62 +73,14 @@ export default {
         .then((group) => {
           if(this.group.id <= 0) {
             this.group = group;
-            this.$emit('addAction', { row: this.row, value: this.group, update: false });
+            this.$emit('addAction', { row: this.row, value: this.group, update: false, element: new Group()});
           } else {
-            this.$emit('addAction', { row: this.row, value: this.group, update: true });
+            this.$emit('addAction', { row: this.row, value: this.group, update: true, element: new Group()});
           }
      
         }, (err) => console.log(err));  
 
 
-    },
-
-    updateGroupEquipments() {
-
-      var addEqps = [];
-      var rmvEqps = [];
-
-      for(var counter = 0; counter < this.equipmentsToAdd.length; counter++) {
-
-        this.equipments.forEach((equipment => {
-          if(equipment.id === this.equipmentsToAdd[0]) {
-            this.group.equipments.push(equipment);
-            addEqps.push(equipment);
-          }
-        }))
-      }
-
-      this.equipments = this.equipments.filter(equipment => {
-        return !addEqps.includes(equipment);
-      })
-
-      for(var counter = 0; counter < this.equipmentsToRemove.length; counter++) {
-
-         this.group.equipments.forEach((equipment => {
-          if(equipment.id === this.equipmentsToRemove[0]) {
-  
-            this.equipments.push(equipment);
-            rmvEqps.push(equipment);
-          }
-        }))
-
-      }
-
-      this.group.equipments = this.group.equipments.filter(equipment => {
-        return !rmvEqps.includes(equipment);
-      })
-
-
-
-
-
-      console.log(this.equipments);
-      console.log(this.group.equipments);
-
-      this.equipmentsToAdd = [];
-      this.equipmentsToRemove = [];
-
-    
     },
 
     removeGroup() {
@@ -173,7 +97,6 @@ export default {
   },
 
   created() {
-
     this.equipmenteService = new EquipmentService(this.$resource);
     this.groupService = new GroupService(this.$resource);
 
@@ -181,7 +104,7 @@ export default {
       this.groupService
         .search(this.id)
         .then(function(group) {
-          this.group = group.value;
+          this.group = group;
         });
     }
     

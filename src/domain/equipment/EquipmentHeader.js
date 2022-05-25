@@ -4,15 +4,15 @@ export const Header = [
         label: "ID",
     },
     {
-        key: "nome",
+        key: "name",
         label: "Name",
     },
     {
-        key: "usuario",
+        key: "user",
         label: "User",
     },
     {
-        key: "senha",
+        key: "password",
         label: "Password",
     },
     {

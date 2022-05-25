@@ -1,7 +1,7 @@
 export default class GroupService {
 
     constructor(resource) {
-        this._resource = resource('groups{/id}');
+        this._resource = resource('Groups{/id}');
 
     }
 

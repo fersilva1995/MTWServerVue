@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-table striped hover :fields="translateFields" :items="translateItens" :dark="dark" borderless responsive="sm">>
+    <b-table id="my-table" ref="table" striped hover :fields="translateFields" :items="translateItens" :dark="dark" borderless responsive="sm">
       <template #head(details)="data">
           {{ data.label = "" }}
       </template>
@@ -27,7 +27,7 @@
 import {i18n} from '../../../lang/lang';
 import GroupComponent from '../../group/Groupadd.vue';
 import EquipmentComponent from '../../equipment/EquipmentAdd.vue'
-import Group from '../../../domain/group/Group'
+
 
 export default {
 
@@ -45,16 +45,14 @@ export default {
 
   data() {
     return {
+      refresh: true,
       countDown: 3,
       currentComponent: this.selectedComponent,
       dark: true,
-      dt: "Detalhes",
       translatedFields: [],
       translatedItens: [],
     }
   },
-
-
 
   computed: {
     translateFields() {
@@ -69,6 +67,7 @@ export default {
     },
 
     translateItens() {
+      this.refresh;
       return this.translatedItens;
     }
   },
@@ -80,17 +79,22 @@ export default {
     },
 
     AddAction(newElement) {
-    
-      console.log(newElement);
-      this.translatedItens[this.translatedItens.length - 1] = newElement.value;
-      console.log(this.translatedItens);
-      console.log(this.translatedItens[this.translatedItens.length - 1]);
 
       if(!newElement.update) {
-        this.translatedItens.push(new Group());
+        this.translatedItens[this.translatedItens.length-1] = newElement.value;
+        this.translatedItens.push(newElement.element);
+      } else {
+        this.translatedItens.forEach((element, index, array) => {
+          if(element.id === newElement.value.id) {
+            array[index] = newElement.value;
+          }
+        })
       }
 
       newElement.row.toggleDetails();
+      this.refresh = !this.refresh;
+      this.$root.$emit('bv::refresh::table', 'my-table');
+      this.$refs.table.refresh();
     },
 
     RemoveAction(element) {
@@ -105,7 +109,6 @@ export default {
     countDownTimer () {
       if (this.countDown > 0) {
           setTimeout(() => {
-              console.log(this.items);
               this.translatedItens = this.items;
               this.countDown -= 1
               this.countDownTimer()
@@ -115,14 +118,10 @@ export default {
   },
 
   created() {
-    console.log("ITENS");
-    console.log(this.items);
     this.translatedItens = this.items;
     this.currentComponent = this.selectedComponent;
     this.countDownTimer();
   }
-
-
 }
 </script>
 

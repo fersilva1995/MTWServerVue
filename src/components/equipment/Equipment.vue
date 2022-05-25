@@ -19,8 +19,8 @@ export default {
 
   data() {
     return {
-          items: [],
-          fields: Header,
+      items: [],
+      fields: Header,
     }
   },
 

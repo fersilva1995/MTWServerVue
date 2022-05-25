@@ -1,0 +1,136 @@
+<template>
+    <b-container fluid>
+        <b-row >
+            <b-col cols="5">
+                <b-table  class="mb-2 mr-sm-2 mb-sm-0" :sticky-header="stickyHeader" :no-border-collapse="noCollapse" :items="avaiableElements" :fields="fields" :dark="dark" table-variant="secondary">
+                    <template #head(details)="data">
+                        <b-form-checkbox></b-form-checkbox>
+                    </template>
+                    <template #cell(details)="row">
+                        <b-form-checkbox v-model="elementsToAdd[row.index]" :value="row.item.id" unchecked-value=null></b-form-checkbox>
+                    </template>         
+                </b-table>
+            </b-col>
+            <b-col cols="2">
+                <myButton type="button" :title="$i18n.t('update')" buttonStyle="primary" @buttonAction="update()"></myButton>
+            </b-col>
+            <b-col cols="5">
+                <b-table  class="mb-2 mr-sm-2 mb-sm-0" :sticky-header="stickyHeader" :no-border-collapse="noCollapse" :items="insertedElements" :fields="fields" :dark="dark" table-variant="secondary">
+                    <template #head(details)="data">
+                        <b-form-checkbox></b-form-checkbox>
+                    </template>
+                    <template #cell(details)="row">
+                        <b-form-checkbox v-model="elementsToRemove[row.index]" :value="row.item.id" unchecked-value=null></b-form-checkbox>
+                    </template>
+                </b-table>
+            </b-col>
+        </b-row>
+    </b-container>
+</template>
+
+
+<script>
+import Button from "../../shared/button/Button.vue";
+
+export default {
+    components: {
+        myButton: Button,
+    },
+
+    props: {
+        initAvaiableElements: [],
+        initInsertedElements: [],
+    },
+
+    data() {
+
+
+        return {
+
+            insertedElements: this.initAvaiableElements,
+            avaiableElements: this.initInsertedElements,
+            elementsToAdd: [],
+            elementsToRemove: [],
+            dark: true,
+            fields: [
+                {
+                    key: "id", 
+                    label:"Id"
+                }, 
+                {
+                    key: "name", 
+                    label:"Nome"
+                },
+                {
+                    key: "details", 
+                    label: "Details"
+                }
+            ],
+            stickyHeader: true,
+            noCollapse: false,
+            countDown: 3,
+
+        };
+    },
+
+    methods: {
+
+        update() {
+            var add = [];
+            var rmv = [];
+
+            for(var counter = 0; counter < this.elementsToAdd.length; counter++) {
+
+                this.avaiableElements.forEach((el => {
+                    if(el.id === this.elementsToAdd[counter]) {
+                        this.insertedElements.push(el);
+                        add.push(el);
+                    }
+                }))
+            }
+
+            this.avaiableElements = this.avaiableElements.filter(el => {
+                return !add.includes(el);
+            })
+
+            for(var counter = 0; counter < this.elementsToRemove.length; counter++) {
+
+                this.insertedElements.forEach((el => {
+                    if(el.id === this.elementsToRemove[counter]) {
+                        this.avaiableElements.push(el);
+                        rmv.push(el);
+                    }
+                }))
+
+            }
+
+            this.insertedElements = this.insertedElements.filter(el => {
+                return !rmv.includes(el);
+            })
+
+            this.elementsToAdd = [];
+            this.elementsToRemove = [];
+
+            this.$emit('updateRelation', { elements: this.insertedElements});
+        },
+
+        countDownTimer () {
+            if (this.countDown > 0) {
+                setTimeout(() => {
+                    this.insertedElements = this.initInsertedElements,
+                    this.avaiableElements = this.initAvaiableElements,
+                    this.countDown -= 1
+                    this.countDownTimer()
+                }, 1000)
+            }
+        }
+
+    },
+
+
+    created() {
+        this.countDownTimer(); 
+    }
+}
+
+</script>

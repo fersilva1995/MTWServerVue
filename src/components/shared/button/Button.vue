@@ -41,7 +41,7 @@ export default {
         border-radius: 3px;
         margin: 10px;
         font-size: 1.1rem;
-        width: 15%;
+        width: 100%;
         float: right;
     }
 </style>

@@ -2,16 +2,18 @@ export default class Equipment {
 
     constructor(name='', ip='', user='', password='', type='', primaryRtsp = '', secondaryRtsp = '', streamingPrimaryRtsp = '', streamingSecondaryRtsp = '', status='', dateTime='') {
 
-        this.nome = name;
+        this.id = 0;
+        this.name = name;
         this.ip = ip;
-        this.usuario = user;
-        this.senha = password;
+        this.user = user;
+        this.password = password;
         this.tipo = type;
         this.primaryRtsp = primaryRtsp;
-        this.sencondRtsp = secondaryRtsp;
-        this.primaryStreamRtsp = streamingPrimaryRtsp;
-        this.sencondRtsp = streamingSecondaryRtsp;
+        this.sencondaryRtsp = secondaryRtsp;
+        this.primaryStreamingRtsp = streamingPrimaryRtsp;
+        this.sencondaryStreamingRtsp = streamingSecondaryRtsp;
         this.status = status;
         this.dateTime = dateTime;
+        this.groups = [];
     }
 }

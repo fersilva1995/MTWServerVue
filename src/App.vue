@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import GroupTable   from './components/shared/table/GroupTable.vue';
-import UserTable    from './components/shared/table/UserTable.vue';
 import Navbar       from './components/shared/navbar/Navbar.vue'
 import Sidebar      from './components/shared/sidebar/Sidebar.vue';
 import Content      from './components/shared/content/Content.vue';
@@ -25,8 +23,6 @@ import { routes }   from './routes';
 export default {
 
   components: {
-    'groupTable': GroupTable,
-    'userTable' : UserTable,
     'contentVue' : Content,
     'navbar' : Navbar,
     'sidebar' : Sidebar,
