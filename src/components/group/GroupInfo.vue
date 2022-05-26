@@ -1,28 +1,28 @@
 <template>
   <div>
-    <h1>Adicionar Grupo</h1>
-    <h2>{{ group.nome }}</h2>
+    <h2>{{ group.name }}</h2>
 
-    <form class="formAdd">
-      <div class="control">
-        <label for="name">Nome</label>
-        <input id="name" autocomplete="off" v-model.lazy="group.nome" />
+    <b-form inline>
+      <div class="control mb-2 mr-2 ml-2">
+        <label for="name">{{ $i18n.t('name') }}</label>
+        <input id="name" autocomplete="off" v-model.lazy="group.name" />
       </div>
 
-      <div class="control">
-        <label for="time">Tempo</label>
+      <div class="control mb-2 mr-2 ml-2">
+        <label for="time">{{ $i18n.t('time') }}</label>
         <input id="time" autocomplete="off" v-model.lazy="group.time" />
       </div>
-
-       <h2 class="title">Cadastro de grupos</h2>
-    </form>
+    </b-form>
 
     <relationTable :initAvaiableElements="equipments" :initInsertedElements="group.equipments" @updateRelation="(elements) => { this.group.equipments = elements.elements }"></relationTable>
-    <div class="btnArea">
-        <myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/>
-        <myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="updateGroup()"/>
-        <myButton type="button" :title="$i18n.t('return')" buttonStyle="light" pageLink="/group"/>
-    </div>
+    <b-content class="btnContainer">
+      <b-row align-h="center">
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/></b-col>
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="updateGroup()"/></b-col>
+      </b-row>
+    </b-content>
+  
+
     
 
 
@@ -31,6 +31,7 @@
 
 
 <script>
+import {i18n} from '../../lang/lang';
 import Button from "../shared/button/Button.vue";
 import RelationTable from "../shared/table/RelationTable.vue"
 import Group from "../../domain/group/Group";
@@ -69,18 +70,16 @@ export default {
       console.log(JSON.stringify(this.group));
 
       this.groupService
-        .update(this.group)
-        .then((group) => {
-          if(this.group.id <= 0) {
-            this.group = group;
-            this.$emit('addAction', { row: this.row, value: this.group, update: false, element: new Group()});
-          } else {
-            this.$emit('addAction', { row: this.row, value: this.group, update: true, element: new Group()});
-          }
-     
-        }, (err) => console.log(err));  
-
-
+      .update(this.group)
+      .then((group) => {
+        if(this.group.id <= 0) {
+          this.group = group;
+          this.$emit('addAction', { row: this.row, value: this.group, update: false, element: new Group()});
+        } else {
+          this.$emit('addAction', { row: this.row, value: this.group, update: true, element: new Group()});
+        }
+  
+      }, (err) => console.log(err));  
     },
 
     removeGroup() {
@@ -104,17 +103,38 @@ export default {
       this.groupService
         .search(this.id)
         .then(function(group) {
+          console.log(group);
           this.group = group;
+
+          this.equipmenteService
+          .list()
+          .then(function(equipments) { 
+
+            var idList = this.group.equipments.map(e => e.id);
+
+            console.log(idList);
+
+            equipments.forEach(eqp => {
+              var state = true;
+
+              idList.forEach(id => { 
+                if(id === eqp.id) { 
+                  state = false;
+                }
+              })
+
+              if(state) { 
+                this.equipments.push(eqp);
+              }
+
+            })
+          },
+          (err) => console.log(err));
         });
     }
     
 
-    this.equipmenteService
-      .list()
-      .then(function(equipments) { 
-          this.equipments = equipments; 
-        },
-        (err) => console.log(err));
+   
   },
 };
 </script>
@@ -127,10 +147,20 @@ export default {
   width: 300px;
 }
 
-.control,
-.btnArea {
+.control {
+  width: 48%;
+  padding: 10px;
+}
+
+.btnContainer {
   font-size: 1.1em;
-  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+.btnArea {
+  margin-left: 50%;
+  margin: auto 0;
+  font-size: 1.1em;
 }
 
 .control label {

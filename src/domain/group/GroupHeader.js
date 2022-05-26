@@ -4,7 +4,7 @@ export const Header = [
         label: "ID",
       },
       {
-        key: "nome",
+        key: "name",
         label: "Name",
       },
       {

@@ -25,8 +25,8 @@
 <script>
 
 import {i18n} from '../../../lang/lang';
-import GroupComponent from '../../group/Groupadd.vue';
-import EquipmentComponent from '../../equipment/EquipmentAdd.vue'
+import GroupComponent from '../../group/GroupInfo.vue';
+import EquipmentComponent from '../../equipment/EquipmentInfo.vue'
 
 
 export default {

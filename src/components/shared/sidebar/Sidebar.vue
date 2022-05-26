@@ -23,7 +23,7 @@
                         <li v-for="route in routes" :key="route" :if="route.icon" class="nav-item">
                             <router-link :to="route.path ? route.path : '/'" class="nav-link">
                                 <i :class="route.icon"></i>
-                                <p>{{route.title}}</p>
+                                <p>{{ $i18n.t(route.title)}}</p>
                             </router-link>
                         </li>
                     </ul>     

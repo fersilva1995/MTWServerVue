@@ -1,67 +1,62 @@
 <template>
   <div>
-    <h1>Adicionar Equipamento</h1>
-    <h2 class="title">{{ equipment.nome }}</h2>
+    <h2 class="title">{{ equipment.name }}</h2>
 
     <b-form inline>
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="name">Name</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="name">{{$i18n.t('name')}}</label>
             <input id="name" autocomplete="off" v-model.lazy="equipment.name" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="ip">IP</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="ip">{{$i18n.t('ip')}}</label>
             <input id="ip" autocomplete="off" v-model.lazy="equipment.ip" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="user">User</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="user">{{$i18n.t('user')}}</label>
             <input id="user" autocomplete="off" v-model.lazy="equipment.user" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="password">Password</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="password">{{$i18n.t('password')}}</label>
             <input id="password" autocomplete="off" v-model.lazy="equipment.password" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="type">Type</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="type">{{$i18n.t('type')}}</label>
             <input id="type" autocomplete="off" v-model.lazy="equipment.tipo" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="primaryRtsp">Primary RTSP</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="primaryRtsp">{{$i18n.t('primaryRtsp')}}</label>
             <input id="primaryRtsp" autocomplete="off" v-model.lazy="equipment.primaryRtsp" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="secondaryRtsp">Second RTSP</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="secondaryRtsp">{{$i18n.t('secondaryRtsp')}}</label>
             <input id="secondaryRtsp" autocomplete="off" v-model.lazy="equipment.sencondaryRtsp" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="streamingPrimaryRtsp">Streaming Primary RTSP</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="streamingPrimaryRtsp">{{$i18n.t('streamingPrimaryRtsp')}}</label>
             <input id="streamingPrimaryRtsp" autocomplete="off" v-model.lazy="equipment.primaryStreamingRtsp" />
         </div>
 
-        <div class="control mb-2 mr-sm-2 mb-sm-0">
-            <label for="streamingSecondaryRtsp">Streaming Sencodary RTSP</label>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="streamingSecondaryRtsp">{{$i18n.t('streamingSecondaryRtsp')}}</label>
             <input id="streamingSecondaryRtsp" autocomplete="off" v-model.lazy="equipment.sencondaryStreamingRtsp" />
         </div>
     </b-form>
 
-    <h2 class="title">Cadastro de grupos</h2>
     <relationTable :initAvaiableElements="groups" :initInsertedElements="equipment.groups" @updateRelation="(elements) => { this.equipment.groups = elements.elements }"></relationTable>
     
-    <div class="btnArea">
-      <myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="remove()"/>
-      <myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="update()"/>
-      <myButton type="button" :title="$i18n.t('return')" buttonStyle="light" pageLink="/group"/>
-    </div>
-
-    
-
-
+    <b-container class="btnContainer">
+      <b-row align-h="center">
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="remove()"/></b-col>
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="update()"/></b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -167,19 +162,38 @@ export default {
       this.equipmenteService
         .search(this.id)
         .then(function(equipment) {
-            console.log(equipment);
-            this.equipment = equipment;
+
+          console.log(equipment);
+          this.equipment = equipment;
+
+          this.groupService
+            .list()
+            .then(function(groups) { 
+
+              var idList = this.equipment.groups.map(e => e.id);
+              console.log(idList);
+
+              groups.forEach(grp => {
+                var state = true;
+
+                idList.forEach(id => { 
+                  if(id === grp.id) { 
+                    state = false;
+                  }
+                })
+
+                if(state) { 
+                  this.groups.push(grp);
+                }
+              })
+            },
+            (err) => console.log(err));
         });
+      }
     }
     
 
-    this.groupService
-      .list()
-      .then(function(groups) { 
-          this.groups = groups; 
-        },
-        (err) => console.log(err));
-    },
+  
 };
 </script>
 
@@ -196,10 +210,18 @@ export default {
   width: 300px;
 }
 
-.control,
+.control {
+  width: 48%;
+  padding: 10px;
+}
 .btnArea {
   font-size: 1.1em;
   margin-bottom: 20px;
+}
+
+.btnContainer {
+  font-size: 1.1em;
+  margin-top: 50px;
 }
 
 .control label {

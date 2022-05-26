@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Grupos</h1>
+    <h1>{{ $i18n.t('groups')}}</h1>
     <dataTable :items="items" :fields="fields" selectedComponent="GroupComponent"/>
   </div>
 </template>
