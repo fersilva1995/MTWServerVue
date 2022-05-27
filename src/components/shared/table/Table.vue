@@ -1,6 +1,13 @@
 <template>
   <div>
-    <b-table id="my-table" ref="table" striped hover :fields="translateFields" :items="translateItens" :dark="dark" borderless responsive="sm">
+
+    <div class="filterDiv">
+      <b-form inline class="filter">
+          <b-form-input class="filterButton"  v-model="filter" type="search" placeholder="Type to Search"></b-form-input>
+      </b-form>
+    </div>
+ 
+    <b-table :filter="filter" :filter-included-fields="filterOn" id="my-table" ref="table" striped hover :fields="translateFields" :items="translateItens" :dark="dark" borderless responsive="sm">
       <template #head(details)="data">
           {{ data.label = "" }}
       </template>
@@ -26,7 +33,9 @@
 
 import {i18n} from '../../../lang/lang';
 import GroupComponent from '../../group/GroupInfo.vue';
-import EquipmentComponent from '../../equipment/EquipmentInfo.vue'
+import EquipmentComponent from '../../equipment/EquipmentInfo.vue';
+import UserComponent from '../../user/UserInfo.vue';
+import ProfileComponent from '../../profile/ProfileInfo.vue';
 
 
 export default {
@@ -35,6 +44,8 @@ export default {
   components: {
     GroupComponent : GroupComponent,
     EquipmentComponent: EquipmentComponent,
+    UserComponent: UserComponent,
+    ProfileComponent: ProfileComponent,
   },
 
   props: {
@@ -51,6 +62,9 @@ export default {
       dark: true,
       translatedFields: [],
       translatedItens: [],
+
+      filter: '',
+      filterOn: [],
     }
   },
 
@@ -126,6 +140,19 @@ export default {
 </script>
 
 <style>
+
+.filterDiv {
+  float: right;
+  padding: 10px;
+}
+
+.filterButton {
+    max-width: 170px;
+    padding: 10px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    float: right;
+}
 
 
 

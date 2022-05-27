@@ -1,15 +1,25 @@
 <template>
     <b-container fluid>
         <b-row>
-            <b-col cols="6">
-                <h5 class="title">{{ $i18n.t('availableEquipments')}}</h5>
-                <b-form-input  v-model="filterAvailableData" type="search" placeholder="Type to Search"></b-form-input>
-                <filterInput @filterData="(filterData) => {this.filterAvailableData = filterData}"></filterInput>
+            <b-col cols="5">
+                <b-form inline class="filter">
+                    <h5 class="title">{{ $i18n.t('availableGroups')}}</h5>
+                    <b-form-input class="filterButton"  v-model="filterAvailableData" type="search" placeholder="Type to Search"></b-form-input>
+                </b-form>
+            </b-col>
+            <b-col align-self="center" cols="2">
+
+            </b-col>
+            <b-col cols="5">
+                <b-form inline>
+                    <h5 class="title">{{ $i18n.t('insertedGroups')}}</h5>
+                    <b-form-input class="filterButton"  v-model="filterInsertedData" type="search" placeholder="Type to Search"></b-form-input>
+                </b-form>
             </b-col>
         </b-row>
         <b-row>
             <b-col cols="5">
-                <b-table :filter="filterAvailableData" :filter-included-fields="filterOn" ref="tableAvailable"  class="mb-2 mr-sm-2 mb-sm-0" :sticky-header="stickyHeader" :no-border-collapse="noCollapse" :items="avaiableElements" :fields="fields" :dark="dark" table-variant="secondary">
+                <b-table :filter="filterAvailableData" :filter-included-fields="filterOnAvailableData" ref="tableAvailable"  class="mb-2 mr-sm-2 mb-sm-0" :sticky-header="stickyHeader" :no-border-collapse="noCollapse" :items="avaiableElements" :fields="fields" :dark="dark" table-variant="secondary">
                     <template #head(details)="data">
                         <b-form-checkbox v-model="allAvailableStatus" @change="changeAllAvaiable"></b-form-checkbox>
                     </template>
@@ -22,7 +32,7 @@
                 <myButton type="button" :title="$i18n.t('update')" buttonStyle="primary" @buttonAction="update()"></myButton>
             </b-col>
             <b-col cols="5">
-                <b-table ref="tableInserted" class="table mb-2 mr-sm-2 mb-sm-0" :sticky-header="stickyHeader" :no-border-collapse="noCollapse" :items="insertedElements" :fields="fields" :dark="dark" table-variant="secondary">
+                <b-table :filter="filterInsertedData" :filter-included-fields="filterOnInsertedData" ref="tableInserted" class="table mb-2 mr-sm-2 mb-sm-0" :sticky-header="stickyHeader" :no-border-collapse="noCollapse" :items="insertedElements" :fields="fields" :dark="dark" table-variant="secondary">
                     <template #head(details)="data">
                         <b-form-checkbox v-model="allInsertedStatus" @change="changeAllInsert"></b-form-checkbox>
                     </template>
@@ -60,10 +70,18 @@ export default {
             avaiableElements: this.initInsertedElements,
             elementsToAdd: [],
             elementsToRemove: [],
+
+
             allAvailableStatus: false,
             allInsertedStatus: false,
+
+
             filterAvailableData: '',
-            filterOn: ["id", "name"],
+            filterOnAvailableData: ["id", "name"],
+            filterInsertedData: '',
+            filterOnInsertedData: ["id", "name"],
+
+
             dark: true,
             fields: [
                 {
@@ -188,6 +206,17 @@ export default {
 }
 .table {
     height: 100%;
+}
+
+.filter{
+    width: 100%;
+}
+
+.filterButton {
+    max-width: 170px;
+    padding: 10px;
+    margin-bottom: 5px;
+    float: right;
 }
 
 </style>

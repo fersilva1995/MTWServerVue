@@ -1,46 +1,55 @@
 {
-    "hello":"Hello Kaetanu",
-    "details": "Details",
-    "homePage":"Home",
-    "aboutPage":"About",
-    "welcome": "Hello {name}",
     "equipment": "Equipment",
     "equipments": "Equipments",
-    "user": "User",
     "group": "Group",
     "groups": "Groups",
-    "errorList" : "Could not obtain list of data",
-    "serialNumber": "Serial Number",
-    "description": "Description",
-    "availableEquipments": "Available Equipments",
+    "user": "User",
+    "users": "Users",
+
+        
     "id": "ID",
-    "nome" : "Name",
     "name" : "Name",
+    "password": "Password",
+    "serialNumber": "Serial Number",
     "time" : "Time",
+    "type": "Type",
+    "ip" : "IP",
+    "primaryRtsp": "PrimaryRtsp",
+    "streamingPrimaryRtsp": "StreamingPrimaryRtsp",
+    "secondaryRtsp": "SecondaryRtsp",
+    "streamingSecondaryRtsp": "StreamingSecondaryRtsp",
+    "dateTime": "Creation",
+    "status": "Status",
+    "login": "Login",
+    "profile": "Profile",
+
+        
+    "filter": "Filter",
+    "availableEquipments": "Available Equipments",
+    "insertedEquipments": "Inserted Equipments",
+    "availableGroups": "Available Group",
+    "insertedGroups": "Inserted Groups",
     "groupRegister" : "Group Register",
     "equipmentRegister" : "Equipment Register",
+
+    "description": "Description",
     "enable" : "Enable",
-    "usernameLabel" : "Username",
-    "passwordLabel" : "Password",
-    "createAccount": "Don't have an account yet? Sign up.",
     "save": "Save",
     "update": "Update",
     "return": "Return",
-    "remove": "Remove",    
+    "remove": "Remove",
+    "errorList" : "Could not obtain list of data",
+    "createAccount": "Don't have an account yet? Sign up.",
     "show": "Show",
-    "hide": "Hide",
-    "password": "Password",
-    "type": "Type",
-    "primaryRtsp": "PrimaryRtsp",
-    "secondaryRtsp": "SecondaryRtsp",
-    "streamingPrimaryRtsp": "StreamingPrimaryRtsp",
-    "streamingSecondaryRtsp": "StreamingSecondaryRtsp",
-    "status": "Status",
-    "dateTime": "DateTime",
-    "usuario": "Users",
-    "senha" : "Password",
-    "tipo": "Type",
-    "sencondRtsp" :  "SecondaryRtsp",
-    "primaryStreamRtsp" :"StreamingPrimaryRtsp",
-    "secondStreamRtsp": "StreamingSecondaryRtsp"
+    "hide": "Hide"
+    
 }
+
+
+
+    
+
+    
+    
+
+
