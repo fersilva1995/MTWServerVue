@@ -36,7 +36,7 @@ import GroupComponent from '../../group/GroupInfo.vue';
 import EquipmentComponent from '../../equipment/EquipmentInfo.vue';
 import UserComponent from '../../user/UserInfo.vue';
 import ProfileComponent from '../../profile/ProfileInfo.vue';
-
+import ServerComponent from '../../server/ServerInfo.vue';
 
 export default {
 
@@ -46,6 +46,7 @@ export default {
     EquipmentComponent: EquipmentComponent,
     UserComponent: UserComponent,
     ProfileComponent: ProfileComponent,
+    ServerComponent: ServerComponent,
   },
 
   props: {

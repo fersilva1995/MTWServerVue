@@ -189,8 +189,17 @@ export default {
             },
             (err) => console.log(err));
         });
-      }
+
+    } else {
+      this.groupService
+      .list()
+      .then(function(groups) { 
+        this.groups = groups;
+      },
+      (err) => console.log(err));
     }
+      
+  }
     
 
   

@@ -3,62 +3,72 @@
     <h2>{{ element.login }}</h2>
 
     <b-form inline>
-      <div class="control mb-2 mr-2 ml-2">
-        <label for="login">{{ $i18n.t('login') }}</label>
-        <input class="control" id="login" autocomplete="off" v-model.lazy="element.login" />
-      </div>
-
-      <div class="control mb-2 mr-2 ml-2">
-        <label for="password">{{ $i18n.t('password') }}</label>
-        <input class="control" type="password" id="password" autocomplete="off" v-model.lazy="element.password" />
-      </div>
-
-
-      <div class="specialControl">
-        <label for="profile">{{ $i18n.t('profile') }}</label>
-        <b-form-select class="formProfile mb-2" v-model.lazy="element.profile" :options="profiles" value-field="id" text-field="name"></b-form-select>
-        <myButton class="controlProfile mb-2" type="button" :title="$i18n.t('edit')"  buttonStyle="success" @buttonAction="toggleProfileInfo()"/>
-        <div v-if="showProfileInfo">
-          <profileInfo :id="element.profile"></profileInfo>
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="lprRecord">{{ $i18n.t('lprRecord') }}</label>
+            <input type="checkbox" id="lprRecord" autocomplete="off" v-model.lazy="element.telemetryServer" />
         </div>
-      </div>
+
+        <div class="control mb-2 mr-2 ml-2">
+            <label for="acessRecord">{{ $i18n.t('acessRecord') }}</label>
+            <input type="checkbox" id="acessRecord" autocomplete="off" v-model.lazy="element.lprServer" />
+        </div>
+
+        <div class="control mb-2 mr-2 ml-2">
+          <label for="acessPermanent">{{ $i18n.t('acessPermanent') }}</label>
+          <input type="checkbox" id="acessPermanent" autocomplete="off" v-model.lazy="element.masterEyeServer" />
+        </div>
+      
+        <div class="control mb-2 mr-2 ml-2">
+          <label for="acessVisitor">{{ $i18n.t('acessVisitor') }}</label>
+          <input type="checkbox" id="acessVisitor" autocomplete="off" v-model.lazy="element.digifortServer" />
+        </div>
+
+        <div class="control mb-2 mr-2 ml-2">
+          <label for="acessModel">{{ $i18n.t('acessModel') }}</label>
+          <input type="checkbox" id="acessModel" autocomplete="off" v-model.lazy="element.recordServer" />
+        </div>
+
+        <div class="control mb-2 mr-2 ml-2">
+          <label for="acessPeriod">{{ $i18n.t('acessPeriod') }}</label>
+          <input type="checkbox" id="acessPeriod" autocomplete="off" v-model.lazy="element.sessionServer" />
+        </div>
+
+        <div class="control mb-2 mr-2 ml-2">
+          <label for="acessSchedule">{{ $i18n.t('acessSchedule') }}</label>
+          <input type="checkbox" id="acessSchedule" autocomplete="off" v-model.lazy="element.rtspServer" />
+        </div>
+
+
     </b-form>
-    {{ element.profile }}
-    <relationTable :initAvaiableElements="equipments" :initInsertedElements="element.equipments" @updateRelation="(elements) => { this.element.equipments = elements.elements }"></relationTable>
-    <relationTable :initAvaiableElements="groups" :initInsertedElements="element.groups" @updateRelation="(elements) => { this.element.groups = elements.elements }"></relationTable>
+
+    <relationTable :initAvaiableElements="equipments" :initInsertedElements="element.serverEquipments" @updateRelation="(elements) => { this.element.serverEquipments = elements.elements }"></relationTable>
+    <relationTable :initAvaiableElements="groups" :initInsertedElements="element.serverGroups" @updateRelation="(elements) => { this.element.serverGroups = elements.elements }"></relationTable>
     
     <b-container  class="btnContainer">
       <b-row align-h="center">
-        <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/></b-col>
-        <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="updateGroup()"/></b-col>
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="remove()"/></b-col>
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="update()"/></b-col>
       </b-row>
     </b-container>
-  
-
-    
-
 
   </div>
 </template>
 
 
 <script>
-import {i18n} from '../../lang/lang';
+
 import Button from "../shared/button/Button.vue";
-import RelationTable from "../shared/table/RelationTable.vue"
-import Element from "../../domain/user/user";
-import Profile from "../../domain/profile/Profile"
-import Service from "../../domain/user/UserService"
+import RelationTable from "../shared/table/RelationTable.vue";
+import Element from "../../domain/server/Server";
+import Service from "../../domain/server/ServerService"
 import GroupService from "../../domain/group/GroupService";
 import EquipmentService from "../../domain/equipment/EquipmentService";
-import ProfileService from "../../domain/profile/ProfileService";
-import ProfileInfo from "../profile/ProfileInfo.vue";
 
 export default {
+
   components: {
     myButton: Button,
     relationTable: RelationTable,
-    profileInfo: ProfileInfo,
   },
 
   props: {
@@ -66,7 +76,6 @@ export default {
     row: '',
   },
 
-  
   data() {
     return {
       element: new Element(),
@@ -77,31 +86,18 @@ export default {
     };
   },
 
-
   methods: {
 
-    toggleProfileInfo() {
-      this.showProfileInfo = !this.showProfileInfo;
-      console.log(this.showProfileInfo);
-    },
-    
-    updateGroup() {
+    update() {
 
-      console.log("update groups");
-   
-
+      console.log("update server");
+      console.log(JSON.stringify(this.element));
       var el = this.element;
-      var selectedProfiles = this.profiles.filter(profile => {
-        if(profile.id === this.element.profile)
-          return profile
-      })
-
-      el.profile = selectedProfiles[0];
-      console.log(JSON.stringify(el));
    
       this.service
       .update(el)
       .then((element) => {
+
         if(this.element.id <= 0) {
           this.element = element;
           this.$emit('addAction', { row: this.row, value: this.element, update: false, element: new Element()});
@@ -110,11 +106,9 @@ export default {
         }
   
       }, (err) => console.log(err));  
-
-      el.profile = el.profile.id;
     },
 
-    removeGroup() {
+    remove() {
      
       this.service
           .erase(this.element.id)
@@ -129,9 +123,8 @@ export default {
 
   created() {
     this.service = new Service(this.$resource);
-    this.equipmenteService = new EquipmentService(this.$resource);
+    this.equipmentService = new EquipmentService(this.$resource);
     this.groupService = new GroupService(this.$resource);
-    this.profileService = new ProfileService(this.$resource);
 
     if(this.id) {
       this.service
@@ -139,15 +132,13 @@ export default {
         .then(function(element) {
 
           console.log(element);
-          
+          2
           this.element = element;
-          this.element.profile = this.element.profile.id;
-
-          this.equipmenteService
+          this.equipmentService
             .list()
             .then(function(equipments) { 
                 
-              var idList = this.element.equipments.map(e => e.id);
+              var idList = this.element.serverEquipments.map(e => e.id);
               equipments.forEach(eqp => {
                 var state = true;
                 idList.forEach(id => { 
@@ -167,7 +158,7 @@ export default {
             .list()
             .then(function(groups) { 
 
-              var idList = this.element.groups.map(e => e.id);
+              var idList = this.element.serverGroups.map(e => e.id);
               groups.forEach(grp => {
                 var state = true;
                 idList.forEach(id => { 
@@ -183,38 +174,36 @@ export default {
             },
             (err) => console.log(err));
 
-          this.profileService
-            .list()
-            .then((profiles) => {
-              this.profiles = profiles;
-              this.profiles.push(new Profile(i18n.t('newProfile')));
-            });
       });
-    }
-    else
-    {
-      this.equipmenteService
+    } else { 
+
+      this.equipmentService
         .list()
         .then(function(equipments) { 
-          this.equipments = equipments;          
+          this.equipments = equipments;
+
+          this.equipments.forEach(el => {
+            el.groups = [];
+          })
+
+          console.log(this.equipments);
         },
         (err) => console.log(err));
 
       this.groupService
         .list()
-        .then(function(groups) { 
-          this.groups = groups; 
+        .then(function(groups) {          
+          this.groups = groups;
+          
+          this.groups.forEach(el => {
+            el.equipments = [];
+          })
+          console.log(this.groups);
         },
         (err) => console.log(err));
-
-      this.profileService
-        .list()
-        .then((profiles) => {
-          this.profiles = profiles;
-          this.profiles.push(new Profile(i18n.t('newProfile')));
-        });
     }
     
+    console.log(this.element);
 
    
   },

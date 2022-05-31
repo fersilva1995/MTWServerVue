@@ -1,9 +1,9 @@
 
 export default class Profile {
 
-    constructor(name='', time='', equipments=[], users=[], servers=[]) {
-        this.id = -1;
-        this.name = '';
+    constructor(name='') {
+        this.id = 0;
+        this.name = name;
         this.lprRecord = true;
         this.acessRecord = true;
         this.acessPermanent = true;

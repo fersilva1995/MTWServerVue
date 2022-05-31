@@ -2,7 +2,7 @@
   <div>
     <h2>{{ element.login }}</h2>
 
-    <b-form inline>
+    <b-form class="formClass" inline>
         <div class="specialControl mb-2 mr-2 ml-2">
             <label for="name">{{ $i18n.t('name') }}</label>
             <input class="specialControl" id="name" autocomplete="off" v-model.lazy="element.name" />
@@ -156,12 +156,12 @@
 
     </b-form>
 
-    <b-content class="btnContainer">
+    <b-container class="btnContainer">
       <b-row align-h="center">
         <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="remove()"/></b-col>
         <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="update()"/></b-col>
       </b-row>
-    </b-content>
+    </b-container>
   
 
     
@@ -244,6 +244,12 @@ export default {
 
 
 <style scoped>
+
+.formClass {
+  width: 100%;
+
+
+}
 .formAdd {
   display: flex;
   flex-direction: column;
@@ -252,7 +258,7 @@ export default {
 
 .specialControl {
     width: 96%;
-    padding: 10px;
+    padding: 5px;
 }
 .control {
     width: 22%;

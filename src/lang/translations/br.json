@@ -5,6 +5,8 @@
     "groups": "Grupos",
     "user": "Usuário",
     "users": "Usuários",
+    "profile" : "Perfil",
+    "profiles" : "Perfis",
     
     
     "id": "ID",
@@ -21,7 +23,32 @@
     "dateTime": "Criação",
     "status": "Estado",
     "login": "Login",
-    "profile": "Perfil",
+    "lprRecord" : "Registros LPR",
+    "acessRecord": "Acesso Registros",
+    "acessPermanent" : "Acesso Permanentes",
+    "acessVisitor": "Acesso Visitantes",
+    "acessModel" : "Acesso Veículos",
+    "acessPeriod" : "Acesso Periodo", 
+    "acessSchedule" : "Acesso Agendamento",
+    "acessOrigin": "Acesso Origem",
+    "acessAction" : "Acesso Ação",
+    "acessRestrictedPlate": "Acesso Placas Restritas",
+    "acessLpr": "Acesso LPR",
+    "acessAnalyzer": "Acesso Analyzer",
+    "acessCameraControl": "Acesso Camera Control",
+    "acessMasterEye": "Acesso MasterEye" ,
+    "acessTelemetry": "Acesso Telemetry",
+    "acessAlarm": "Acesso Alarmes",
+    "acessRecordVideo": "Acesso Gravação",
+    "acessAddEquipament": "Acesso Adicionar Equipamento",
+    "acessRemoveEquipment" : "Acess Remover Equipmento",
+    "acessEditEquipment" : "Acesso Editar Equipmento", 
+    "acessAddGroup": "Acessoo Adicionar Grupo",
+    "acessRemoveGroup": "Acesso Remover Grupo",
+    "acessEditGroup" : "Acesso Editar Grupo",
+
+
+
     
     
     
@@ -37,6 +64,7 @@
     "description": "Descrição",
     "enable" : "Habilitado",
     "save": "Salvar",
+    "edit": "Editar",
     "update": "Atualizar",
     "return": "Voltar",
     "remove": "Remover",

@@ -5,6 +5,7 @@ export default class User {
         this.id = 0;
         this.login = '';
         this.password = '';
+        this.image = '';
         this.groups = [];
         this.equipments = [];
         this.profile = { name: ''};
