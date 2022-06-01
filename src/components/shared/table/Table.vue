@@ -37,6 +37,9 @@ import EquipmentComponent from '../../equipment/EquipmentInfo.vue';
 import UserComponent from '../../user/UserInfo.vue';
 import ProfileComponent from '../../profile/ProfileInfo.vue';
 import ServerComponent from '../../server/ServerInfo.vue';
+import VisitorComponent from '../../visitor/VisitorInfo.vue'; 
+import VehicleComponent from '../../vehicle/VehicleInfo.vue';
+import PeriodComponent from '../../period/PeriodInfo.vue';
 
 export default {
 
@@ -47,6 +50,10 @@ export default {
     UserComponent: UserComponent,
     ProfileComponent: ProfileComponent,
     ServerComponent: ServerComponent,
+    VisitorComponent: VisitorComponent,
+    VehicleComponent: VehicleComponent,
+    PeriodComponent: PeriodComponent,
+
   },
 
   props: {

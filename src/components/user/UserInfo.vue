@@ -13,14 +13,8 @@
         <input class="control" type="password" id="password" autocomplete="off" v-model.lazy="element.password" />
       </div>
 
-
       <div class="specialControl">
-        <label for="profile">{{ $i18n.t('profile') }}</label>
-        <b-form-select class="formProfile mb-2" v-model.lazy="element.profile" :options="profiles" value-field="id" text-field="name"></b-form-select>
-        <myButton class="controlProfile mb-2" type="button" :title="$i18n.t('edit')"  buttonStyle="success" @buttonAction="toggleProfileInfo()"/>
-        <div v-if="showProfileInfo">
-          <profileInfo :id="element.profile"></profileInfo>
-        </div>
+        <objectSelect name="profile" selectedComponent="ProfileComponent" :dt="profiles" :el="element.profile.id" @change="(newValue) => { this.element.profile = newValue;}"></objectSelect>
       </div>
     </b-form>
     {{ element.profile }}
@@ -29,8 +23,8 @@
     
     <b-container  class="btnContainer">
       <b-row align-h="center">
-        <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/></b-col>
-        <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="updateGroup()"/></b-col>
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="remove()"/></b-col>
+        <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="update()"/></b-col>
       </b-row>
     </b-container>
   
@@ -45,7 +39,8 @@
 <script>
 import {i18n} from '../../lang/lang';
 import Button from "../shared/button/Button.vue";
-import RelationTable from "../shared/table/RelationTable.vue"
+import RelationTable from "../shared/table/RelationTable.vue";
+import ObjectSelect from "../shared/select/ObjectSelect.vue";
 import Element from "../../domain/user/user";
 import Profile from "../../domain/profile/Profile"
 import Service from "../../domain/user/UserService"
@@ -58,6 +53,7 @@ export default {
   components: {
     myButton: Button,
     relationTable: RelationTable,
+    objectSelect: ObjectSelect,
     profileInfo: ProfileInfo,
   },
 
@@ -85,18 +81,10 @@ export default {
       console.log(this.showProfileInfo);
     },
     
-    updateGroup() {
+    update() {
 
-      console.log("update groups");
-   
-
+      console.log("update users");
       var el = this.element;
-      var selectedProfiles = this.profiles.filter(profile => {
-        if(profile.id === this.element.profile)
-          return profile
-      })
-
-      el.profile = selectedProfiles[0];
       console.log(JSON.stringify(el));
    
       this.service
@@ -111,19 +99,18 @@ export default {
   
       }, (err) => console.log(err));  
 
-      el.profile = el.profile.id;
     },
 
-    removeGroup() {
+    remove() {
      
       this.service
-          .erase(this.element.id)
-          .then(() => {  
-            console.log(this.element);
-            this.$emit('removeAction', { row: this.row, value: this.element });  
-            this.element = new Element()     
-          }
-          ,(err) => console.log(err));
+        .erase(this.element.id)
+        .then(() => {  
+          console.log(this.element);
+          this.$emit('removeAction', { row: this.row, value: this.element });  
+          this.element = new Element()     
+        }
+        ,(err) => console.log(err));
     }
   },
 
@@ -138,11 +125,8 @@ export default {
         .search(this.id)
         .then(function(element) {
 
-          console.log(element);
-          
+          console.log(element);   
           this.element = element;
-          this.element.profile = this.element.profile.id;
-
           this.equipmenteService
             .list()
             .then(function(equipments) { 
@@ -182,13 +166,6 @@ export default {
               })
             },
             (err) => console.log(err));
-
-          this.profileService
-            .list()
-            .then((profiles) => {
-              this.profiles = profiles;
-              this.profiles.push(new Profile(i18n.t('newProfile')));
-            });
       });
     }
     else
@@ -206,17 +183,15 @@ export default {
           this.groups = groups; 
         },
         (err) => console.log(err));
-
-      this.profileService
-        .list()
-        .then((profiles) => {
-          this.profiles = profiles;
-          this.profiles.push(new Profile(i18n.t('newProfile')));
-        });
     }
-    
 
-   
+    this.profileService
+      .list()
+      .then((profiles) => {
+        this.profiles = profiles;
+        this.profiles.push(new Profile(i18n.t('newProfile')));
+      });
+    
   },
 };
 </script>

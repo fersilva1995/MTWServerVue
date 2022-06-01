@@ -7,6 +7,14 @@
     "users": "Usuários",
     "profile" : "Perfil",
     "profiles" : "Perfis",
+    "servers": "Servers",
+    "server": "Server",
+    "vehicle": "Veículo",
+    "vehicles": "Veículos",
+    "visitor": "Visitante",
+    "visitors" : "Visitantes",
+    "period" : "Período",
+    "periods": "Períodos",
     
     
     "id": "ID",
@@ -46,6 +54,12 @@
     "acessAddGroup": "Acessoo Adicionar Grupo",
     "acessRemoveGroup": "Acesso Remover Grupo",
     "acessEditGroup" : "Acesso Editar Grupo",
+    "brand": "Marca",
+    "title": "Título",
+    "hours": "Horas",
+    "plate": "Placa",
+    "authorization": "Autorização",
+    
 
 
 
@@ -59,6 +73,8 @@
     "insertedGroups": "Grupos inseridos",
     "groupRegister" : "Cadastro de Grupos",
     "equipmentRegister" : "Cadastro de Equipamentos",
+    "newPeriod": "Novo Período",
+    "newVehicle": "Novo Veículo",
     
     
     "description": "Descrição",

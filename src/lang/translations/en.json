@@ -7,6 +7,14 @@
     "users": "Users",
     "profile" : "Profile",
     "profiles" : "Profiles",
+    "servers": "Servers",
+    "server": "Server",
+    "vehicle": "Vehicle",
+    "vehicles": "Vehicles",
+    "visitor": "Visitor",
+    "visitors" : "Visitors",
+    "period" : "Period",
+    "periods": "Periods",
 
         
     "id": "ID",
@@ -46,6 +54,11 @@
     "acessAddGroup": "Acess Add Group",
     "acessRemoveGroup": "Acess Remove Group",
     "acessEditGroup" : "Acess Edit Group",
+    "brand": "Brand",
+    "title": "Title",
+    "hours": "Hours",
+    "plate": "Plate",
+    "authorization": "Authorization",
 
 
 
@@ -57,6 +70,8 @@
     "insertedGroups": "Inserted Groups",
     "groupRegister" : "Group Register",
     "equipmentRegister" : "Equipment Register",
+    "newPeriod": "New Period",
+    "newVehicle": "New Vehicle",
 
     "description": "Description",
     "enable" : "Enable",

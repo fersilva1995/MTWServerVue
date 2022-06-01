@@ -1,0 +1,44 @@
+<template>
+  <div>
+    <h1>{{ $i18n.t('visitor')}}</h1>
+    <dataTable :items="items" :fields="fields" selectedComponent="VisitorComponent"/>
+  </div>
+</template>
+
+<script>
+
+import Table from "../shared/table/Table.vue";
+import Service from '../../domain/visitor/visitorService';
+import Element from '../../domain/visitor/visitor';
+import { Header } from "../../domain/visitor/VisitorHeader"
+
+export default {
+
+  components: {
+    dataTable: Table,
+  },
+
+  data() {
+    return {
+      items: [],
+      fields: Header,
+    }
+  },
+
+  created() {
+    this.service = new Service(this.$resource);
+
+    this.service
+      .list()
+      .then((items) => {
+        console.log(items);
+        this.items = items;
+        this.items.push(new Element());
+      });
+  },
+};
+</script>
+
+
+<style scoped>
+</style>
