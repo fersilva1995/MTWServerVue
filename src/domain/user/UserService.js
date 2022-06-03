@@ -1,4 +1,4 @@
-export default class GroupService {
+export default class Service {
 
     constructor(resource) {
         this._resource = resource('Users{/id}');
@@ -15,12 +15,12 @@ export default class GroupService {
             });
     }
 
-    update(group) {
+    update(element) {
         
-        if(group.id) {
-            return this._resource.update( {id: group.id}, group);
+        if(element.id) {
+            return this._resource.update( {id: element.id}, element);
         } else {
-            return this._resource.save(group).then(res => res.json(), err => {
+            return this._resource.save(element).then(res => res.json(), err => {
                 console.log(err);
                 throw new Error(err.message);
             });;

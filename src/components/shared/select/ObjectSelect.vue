@@ -26,6 +26,8 @@ import ServerComponent from '../../server/ServerInfo.vue';
 import VisitorComponent from '../../visitor/VisitorInfo.vue'; 
 import VehicleComponent from '../../vehicle/VehicleInfo.vue';
 import PeriodComponent from '../../period/PeriodInfo.vue';
+import ScheduleComponent from '../../schedule/ScheduleInfo.vue';
+import PermanentComponent from '../../permanent/PermanentInfo.vue';
 
 export default {
 
@@ -39,6 +41,8 @@ export default {
         VisitorComponent: VisitorComponent,
         VehicleComponent: VehicleComponent,
         PeriodComponent: PeriodComponent,
+        ScheduleComponent: ScheduleComponent,
+        PermanentComponent: PermanentComponent,
     },
 
     props: {

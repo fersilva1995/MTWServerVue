@@ -6,6 +6,9 @@ import Server from './components/server/Server.vue';
 import Vehicle from './components/vehicle/Vehicle.vue';
 import Period from './components/period/Period.vue';
 import Visitor from './components/visitor/Visitor.vue';
+import Schedule from './components/schedule/Schedule.vue';
+import Permanent from './components/permanent/Permanent.vue';
+import RestrictedPlates from './components/restrictedPlates/RestrictedPlates.vue';
 
 
 export const routes = [
@@ -17,6 +20,9 @@ export const routes = [
     { path: '/vehicle', component: Vehicle, title: 'vehicle', icon: 'nav-icon fas fa-car' },
     { path: '/period', component: Period, title: 'period', icon: 'nav-icon fas fa-hourglass-start' },
     { path: '/visitor', component: Visitor, title: 'visitor', icon: 'nav-icon fas fa-retweet' },
+    { path: '/schedule', component: Schedule, title: 'schedule', icon: 'nav-icon fas fa-calendar' },
+    { path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' },
+    { path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' },
     
 ];
 

@@ -1,55 +1,55 @@
 <template>
   <div>
-    <h2 class="title">{{ equipment.name }}</h2>
+    <h2 class="title">{{ element.name }}</h2>
 
     <b-form inline>
         <div class="control mb-2 mr-2 ml-2">
             <label for="name">{{$i18n.t('name')}}</label>
-            <input id="name" autocomplete="off" v-model.lazy="equipment.name" />
+            <input id="name" autocomplete="off" v-model.lazy="element.name" />
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="ip">{{$i18n.t('ip')}}</label>
-            <input id="ip" autocomplete="off" v-model.lazy="equipment.ip" />
+            <input id="ip" autocomplete="off" v-model.lazy="element.ip" />
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="user">{{$i18n.t('user')}}</label>
-            <input id="user" autocomplete="off" v-model.lazy="equipment.user" />
+            <input id="user" autocomplete="off" v-model.lazy="element.user" />
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="password">{{$i18n.t('password')}}</label>
-            <input id="password" autocomplete="off" v-model.lazy="equipment.password" />
+            <input id="password" autocomplete="off" v-model.lazy="element.password" />
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="type">{{$i18n.t('type')}}</label>
-            <input id="type" autocomplete="off" v-model.lazy="equipment.tipo" />
+            <b-form-select class="selectControl" v-model="element.tipo" :options="options"></b-form-select>
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="primaryRtsp">{{$i18n.t('primaryRtsp')}}</label>
-            <input id="primaryRtsp" autocomplete="off" v-model.lazy="equipment.primaryRtsp" />
+            <input id="primaryRtsp" autocomplete="off" v-model.lazy="element.primaryRtsp" />
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="secondaryRtsp">{{$i18n.t('secondaryRtsp')}}</label>
-            <input id="secondaryRtsp" autocomplete="off" v-model.lazy="equipment.sencondaryRtsp" />
+            <input id="secondaryRtsp" autocomplete="off" v-model.lazy="element.sencondaryRtsp" />
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="streamingPrimaryRtsp">{{$i18n.t('streamingPrimaryRtsp')}}</label>
-            <input id="streamingPrimaryRtsp" autocomplete="off" v-model.lazy="equipment.primaryStreamingRtsp" />
+            <input id="streamingPrimaryRtsp" autocomplete="off" v-model.lazy="element.primaryStreamingRtsp" />
         </div>
 
         <div class="control mb-2 mr-2 ml-2">
             <label for="streamingSecondaryRtsp">{{$i18n.t('streamingSecondaryRtsp')}}</label>
-            <input id="streamingSecondaryRtsp" autocomplete="off" v-model.lazy="equipment.sencondaryStreamingRtsp" />
+            <input id="streamingSecondaryRtsp" autocomplete="off" v-model.lazy="element.sencondaryStreamingRtsp" />
         </div>
     </b-form>
 
-    <relationTable :initAvaiableElements="groups" :initInsertedElements="equipment.groups" @updateRelation="(elements) => { this.equipment.groups = elements.elements }"></relationTable>
+    <relationTable :initAvaiableElements="groups" :initInsertedElements="element.groups" @updateRelation="(elements) => { this.element.groups = elements.elements }"></relationTable>
     
     <b-container class="btnContainer">
       <b-row align-h="center">
@@ -64,9 +64,9 @@
 <script>
 import Button from "../shared/button/Button.vue";
 import RelationTable from "../shared/table/RelationTable.vue"
-import Equipment from "../../domain/equipment/Equipment";
+import Element from "../../domain/equipment/Equipment";
 import GroupService from "../../domain/group/GroupService";
-import EquipmentService from "../../domain/equipment/EquipmentService"
+import Service from "../../domain/equipment/EquipmentService"
 
 export default {
   components: {
@@ -82,26 +82,26 @@ export default {
   
   data() {
     return {
-      equipment: new Equipment(),
+      element: new Element(),
       groups: [],
-      dark: true,
-      groupFields: [
-        {
-          key: "id", 
-          label:"Id"
-        }, 
-        {
-          key: "nome", 
-          label:"Nome"
-        },
-        {
-          key: "details", 
-          label: "Details"
-        }
+      options: [
+        "Vazio",
+        "Camera",
+        "Switch",
+        "Computador",
+        "Modem",
+        "Roteador",
+        "Servidor",
+        "Telefone",
+        "Telemetria",
+        "GateWay",
+        "Radio",
+        "Medidor",
+        "NVR",
+        "DVR",
+        "HD",
+        "Outro"
       ],
-      stickyHeader: true,
-      noCollapse: false,
-
     };
   },
 
@@ -110,68 +110,66 @@ export default {
     
     updateRelation(elements) {
       console.log(elements.elements);
-      this.equipment.groups = elements.elements;
+      this.element.groups = elements.elements;
     },
 
     update() {
 
       console.log("update equipments");
-      this.equipment.tipo = 10;
-      this.equipment.status = true;
-      this.equipment.dateTime = new Date();
+      this.element.tipo = this.options.indexOf(this.element.tipo);
+      this.element.status = true;
+      this.element.dateTime = new Date();
 
-      this.equipment.groups.forEach((el => {
+      this.element.groups.forEach((el => {
         el.equipments = [];
       }));
 
-      console.log(JSON.stringify(this.equipment));
+      console.log(JSON.stringify(this.element));
     
-
-      this.equipmenteService
-        .update(this.equipment)
+      this.service
+        .update(this.element)
         .then((equipment) => {
-          if(this.equipment.id <= 0) {
-            this.equipment = equipment;
-            this.$emit('addAction', { row: this.row, value: this.equipment, update: false, element: new Equipment()});
+          if(this.element.id <= 0) {
+            this.element = equipment;
+            this.$emit('addAction', { row: this.row, value: this.element, update: false, element: new Element()});
           } else {
-            this.$emit('addAction', { row: this.row, value: this.equipment, update: true, element: new Equipment()});
+            this.$emit('addAction', { row: this.row, value: this.element, update: true, element: new Element()});
           }
         }, (err) => console.log(err));  
-
-
     },
 
     remove() {
      
-      this.equipmenteService
-          .erase(this.id)
-          .then(() => {  
-            this.$emit('removeAction', { row: this.row, value: this.equipment });  
-            this.equipment = new Equipment()     
-          }
-          ,(err) => console.log(err));
+      this.service
+        .erase(this.id)
+        .then(() => {  
+          this.$emit('removeAction', { row: this.row, value: this.element });  
+          this.element = new Element()     
+        }
+        ,(err) => console.log(err));
     }
   },
 
   created() {
 
-    this.equipmenteService = new EquipmentService(this.$resource);
+    this.service = new Service(this.$resource);
     this.groupService = new GroupService(this.$resource);
 
     if(this.id) {
-      this.equipmenteService
+      this.service
         .search(this.id)
-        .then(function(equipment) {
+        .then(function(element) {
 
-          console.log(equipment);
-          this.equipment = equipment;
+          console.log(element);
+          console.log(this.options);
+          this.element = element;
+          this.element.tipo = this.options[this.element.tipo];
 
           this.groupService
             .list()
             .then(function(groups) { 
 
-              var idList = this.equipment.groups.map(e => e.id);
-              console.log(idList);
+              var idList = this.element.groups.map(e => e.id);
 
               groups.forEach(grp => {
                 var state = true;
@@ -223,6 +221,12 @@ export default {
   width: 48%;
   padding: 10px;
 }
+
+.selectControl {
+  width: 100%;
+}
+
+
 .btnArea {
   font-size: 1.1em;
   margin-bottom: 20px;

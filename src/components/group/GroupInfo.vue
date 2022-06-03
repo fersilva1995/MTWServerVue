@@ -1,26 +1,26 @@
 <template>
   <div>
-    <h2>{{ group.name }}</h2>
+    <h2>{{ element.name }}</h2>
 
     <b-form inline>
       <div class="control mb-2 mr-2 ml-2">
         <label for="name">{{ $i18n.t('name') }}</label>
-        <input id="name" autocomplete="off" v-model.lazy="group.name" />
+        <input id="name" autocomplete="off" v-model.lazy="element.name" />
       </div>
 
       <div class="control mb-2 mr-2 ml-2">
         <label for="time">{{ $i18n.t('time') }}</label>
-        <input id="time" autocomplete="off" v-model.lazy="group.time" />
+        <input id="time" autocomplete="off" v-model.lazy="element.time" />
       </div>
     </b-form>
 
-    <relationTable :initAvaiableElements="equipments" :initInsertedElements="group.equipments" @updateRelation="(elements) => { this.group.equipments = elements.elements }"></relationTable>
-    <b-content class="btnContainer">
+    <relationTable :initAvaiableElements="equipments" :initInsertedElements="element.equipments" @updateRelation="(elements) => { this.element.equipments = elements.elements }"></relationTable>
+    <b-container class="btnContainer">
       <b-row align-h="center">
         <b-col cols="2"><myButton type="button" :title="$i18n.t('remove')" buttonStyle="danger" @buttonAction="removeGroup()"/></b-col>
         <b-col cols="2"><myButton type="button" :title="$i18n.t('save')"  buttonStyle="success" @buttonAction="updateGroup()"/></b-col>
       </b-row>
-    </b-content>
+    </b-container>
   
 
     
@@ -34,8 +34,8 @@
 import {i18n} from '../../lang/lang';
 import Button from "../shared/button/Button.vue";
 import RelationTable from "../shared/table/RelationTable.vue"
-import Group from "../../domain/group/Group";
-import GroupService from "../../domain/group/GroupService";
+import Element from "../../domain/group/Group";
+import Service from "../../domain/group/GroupService";
 import EquipmentService from "../../domain/equipment/EquipmentService"
 
 export default {
@@ -52,7 +52,7 @@ export default {
   
   data() {
     return {
-      group: new Group(),
+      element: new Element(),
       equipments: [],
     };
   },
@@ -61,22 +61,22 @@ export default {
   methods: {
     
     updateRelation(elements) {
-      this.group.equipments = elements.elements;  
+      this.element.equipments = elements.elements;  
     },
 
     updateGroup() {
 
       console.log("update groups");
-      console.log(JSON.stringify(this.group));
+      console.log(JSON.stringify(this.element));
 
-      this.groupService
-      .update(this.group)
-      .then((group) => {
-        if(this.group.id <= 0) {
-          this.group = group;
-          this.$emit('addAction', { row: this.row, value: this.group, update: false, element: new Group()});
+      this.service
+      .update(this.element)
+      .then((element) => {
+        if(this.element.id <= 0) {
+          this.element = element;
+          this.$emit('addAction', { row: this.row, value: this.element, update: false, element: new Element()});
         } else {
-          this.$emit('addAction', { row: this.row, value: this.group, update: true, element: new Group()});
+          this.$emit('addAction', { row: this.row, value: this.element, update: true, element: new Element()});
         }
   
       }, (err) => console.log(err));  
@@ -84,36 +84,33 @@ export default {
 
     removeGroup() {
      
-      this.groupService
-          .erase(this.group.id)
-          .then(() => {  
-            console.log(this.group);
-            this.$emit('removeAction', { row: this.row, value: this.group });  
-            this.group = new Group()     
-          }
-          ,(err) => console.log(err));
+      this.service
+        .erase(this.element.id)
+        .then(() => {  
+          console.log(this.element);
+          this.$emit('removeAction', { row: this.row, value: this.element });  
+          this.element = new Element()     
+        }
+        ,(err) => console.log(err));
     }
   },
 
   created() {
     this.equipmenteService = new EquipmentService(this.$resource);
-    this.groupService = new GroupService(this.$resource);
+    this.service = new Service(this.$resource);
 
     if(this.id) {
-      this.groupService
+      this.service
         .search(this.id)
-        .then(function(group) {
-          console.log(group);
-          this.group = group;
+        .then(function(element) {
+          console.log(element);
+          this.element = element;
 
           this.equipmenteService
           .list()
           .then(function(equipments) { 
 
-            var idList = this.group.equipments.map(e => e.id);
-
-            console.log(idList);
-
+            var idList = this.element.equipments.map(e => e.id);
             equipments.forEach(eqp => {
               var state = true;
 
@@ -124,17 +121,23 @@ export default {
               })
 
               if(state) { 
-                this.equipments.push(eqp);
+                this.element.push(eqp);
               }
 
             })
           },
           (err) => console.log(err));
         });
-    }
-    
+    } else {
 
-   
+      this.equipmenteService
+      .list()
+      .then(function(equipments) { 
+        this.equipments = equipments;
+      },
+      (err) => console.log(err));
+    }
+
   },
 };
 </script>

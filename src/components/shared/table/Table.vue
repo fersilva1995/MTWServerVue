@@ -40,6 +40,9 @@ import ServerComponent from '../../server/ServerInfo.vue';
 import VisitorComponent from '../../visitor/VisitorInfo.vue'; 
 import VehicleComponent from '../../vehicle/VehicleInfo.vue';
 import PeriodComponent from '../../period/PeriodInfo.vue';
+import ScheduleComponent from '../../schedule/ScheduleInfo.vue';
+import PermanentComponent from '../../permanent/PermanentInfo.vue';
+import RestrictedPlatesComponent from '../../restrictedPlates/RestrictedPlatesInfo.vue';
 
 export default {
 
@@ -53,6 +56,9 @@ export default {
     VisitorComponent: VisitorComponent,
     VehicleComponent: VehicleComponent,
     PeriodComponent: PeriodComponent,
+    ScheduleComponent: ScheduleComponent,
+    PermanentComponent: PermanentComponent,
+    RestrictedPlatesComponent: RestrictedPlatesComponent,
 
   },
 
@@ -102,6 +108,7 @@ export default {
 
     AddAction(newElement) {
 
+      console.log(newElement);
       if(!newElement.update) {
         this.translatedItens[this.translatedItens.length-1] = newElement.value;
         this.translatedItens.push(newElement.element);

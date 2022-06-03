@@ -1,4 +1,4 @@
-export default class EquipmentService {
+export default class Service {
 
     constructor(resource) {
         this._resource = resource('equipments{/id}');
@@ -15,12 +15,12 @@ export default class EquipmentService {
             });
     }
 
-    update(equipment) {
+    update(element) {
         
-        if(equipment.id) {
-            return this._resource.update( {equipment: equipment.id}, equipment);
+        if(element.id) {
+            return this._resource.update( {id: element.id}, element);
         } else {
-            return this._resource.save(equipment);
+            return this._resource.save(element);
         }
 
     }

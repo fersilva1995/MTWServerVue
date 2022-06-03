@@ -15,6 +15,11 @@
     "visitors" : "Visitantes",
     "period" : "Período",
     "periods": "Períodos",
+    "schedule": "Agendamento",
+    "schedules": "Agendamentos",
+    "permanent": "Permanente",
+    "permanents": "Permanentes",
+    "restrictedPlates": "Placas Restritas",
     
     
     "id": "ID",
@@ -24,6 +29,7 @@
     "time" : "Tempo",
     "type": "Tipo",
     "ip" : "IP",
+    "tipo": "Tipo",
     "primaryRtsp": "RTSP Primário",
     "streamingPrimaryRtsp": "RTSP de transmissão primário",
     "secondaryRtsp": "RTSP Secundário",
@@ -59,12 +65,26 @@
     "hours": "Horas",
     "plate": "Placa",
     "authorization": "Autorização",
-    
-
-
-
-    
-    
+    "jobTitle": "Cargo",
+    "registration" : "Matrícula",
+    "startValidDate" : "Data de Início",
+    "endValidDate" : "Data de Fim",
+    "newSchedule" : "Novo Agendamento",
+    "mondayStartTime" : "Começo Segunda",
+    "mondayEndTime" : "Fim Segunda",
+    "tuesdayStartTime" : "Começo Terça",
+    "tuesdayEndTime" : "Fim Terça",
+    "wednesdayStartTime" : "Começo Quarta",
+    "wednesdayEndTime" : "Fim Quarta",
+    "thursdayStartTime" : "Começo Quinta",
+    "thursdayEndTime" : "Fim Quinta",
+    "fridayStartTime" : "Começo Sexta",
+    "fridayEndTime" : "Fim Sexta",
+    "saturdayStartTime" : "Começo Sábado",
+    "saturdayEndTime" : "Fim Sábado",
+    "sundayStartTime" : "Comço Domingo",
+    "sundayEndTime" : "Fim Domingo",
+ 
     
     "filter": "Filtro",
     "availableEquipments": "Equipamentos disponíveis",

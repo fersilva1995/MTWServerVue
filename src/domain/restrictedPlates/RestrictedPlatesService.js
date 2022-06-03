@@ -1,18 +1,18 @@
 export default class Service {
 
     constructor(resource) {
-        this._resource = resource('Groups{/id}');
+        this._resource = resource('api/RestrictedPlates{/id}');
 
     }
 
     list() {
 
         return this._resource
-                .query()
-                .then(res => res.json(), err => {
-                    console.log(err);
-                    throw new Error(err.message);
-                });
+            .query()
+            .then(res => res.json(), err => {
+                console.log(err);
+                throw new Error(err.message);
+            });
     }
 
     update(element) {
