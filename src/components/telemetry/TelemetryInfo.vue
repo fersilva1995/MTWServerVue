@@ -54,9 +54,9 @@ export default {
 
   data() {
     return {
-      updateElement: this.id > 0,
       element: new Element(),
       fields: Header,
+      updateElement: this.id > 0,
       baseElements: this.array,
       baseEquipments:[],
     };

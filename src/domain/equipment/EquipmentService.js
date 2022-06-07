@@ -29,7 +29,7 @@ export default class Service {
     erase(id) {
 
         return this._resource
-            .delete( { id } )
+            .delete( { id , userId: 1} )
             .then(null, err => {
                 console.log(err);
                 throw new Error(err.message);

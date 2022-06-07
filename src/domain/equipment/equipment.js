@@ -1,6 +1,6 @@
 export default class Equipment {
 
-    constructor(id=0, name='', ip='', user='', password='', type=0, primaryRtsp = '', secondaryRtsp = '', streamingPrimaryRtsp = '', streamingSecondaryRtsp = '', status='', dateTime='') {
+    constructor(id=0, name='', ip='', user='', password='', type=0, primaryRtsp = '', secondaryRtsp = '', streamingPrimaryRtsp = '', streamingSecondaryRtsp = '', status=true, dateTime = new Date()) {
 
         this.id = id;
         this.name = name;

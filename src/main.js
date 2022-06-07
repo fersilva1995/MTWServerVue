@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import VueI18n from 'vue-i18n';
+import VueSession from "vue-session";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { routes } from './routes';
 import { i18n } from './lang/lang'
@@ -17,6 +18,7 @@ Vue.use(VueRouter);
 Vue.use(VueI18n);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(VueSession);
 
 const router = new VueRouter({ 
   routes,

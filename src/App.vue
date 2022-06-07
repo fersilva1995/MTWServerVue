@@ -1,13 +1,18 @@
 <template>
   <div>
-    <navbar>
-    </navbar>
+    <div v-if="logged">
+      <navbar>
+      </navbar>
       <sidebar :routes="routes">
       </sidebar>
       <contentVue>     
         <language></language> 
         <router-view></router-view>
       </contentVue>
+    </div>
+    <div v-else>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -28,10 +33,22 @@ export default {
   },
 
   data() {
-      return {
-        routes
-      }
+    return {
+      routes,
     }
+  },
+
+  computed: {
+    logged() {
+      return this.$session.get('logged');
+    }
+  },
+
+  methods: {
+    login(login) {
+      login = login.state;
+    }
+  }
 
 }
 
