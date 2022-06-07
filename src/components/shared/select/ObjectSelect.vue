@@ -1,7 +1,7 @@
 <template>
-    <div class="specialControl">
+    <div  class="specialControl">
         <label class="labelChild" for="vehicle">{{ $i18n.t(name) }}</label>
-        <b-form-select class="formChild mb-2" v-model="element" @change="change" >
+        <b-form-select :disabled="disabled"  class="formChild mb-2" v-model="element" @change="change" >
             <option v-for="dataValue in data" :value="dataValue.id">
                 <label v-if="dataValue.title">{{dataValue.title}}</label>
                 <label v-else-if="dataValue.name">{{dataValue.name}}</label>
@@ -46,6 +46,7 @@ export default {
     },
 
     props: {
+        disabled: false,
         name: '',
         selectedComponent: '',
         dt: [],

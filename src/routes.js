@@ -9,6 +9,8 @@ import Visitor from './components/visitor/Visitor.vue';
 import Schedule from './components/schedule/Schedule.vue';
 import Permanent from './components/permanent/Permanent.vue';
 import RestrictedPlates from './components/restrictedPlates/RestrictedPlates.vue';
+import Record from './components/record/Record.vue';
+import Telemetry from './components/telemetry/Telemetry.vue';
 
 
 export const routes = [
@@ -23,6 +25,8 @@ export const routes = [
     { path: '/schedule', component: Schedule, title: 'schedule', icon: 'nav-icon fas fa-calendar' },
     { path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' },
     { path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' },
+    { path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' },
+    { path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' },
     
 ];
 

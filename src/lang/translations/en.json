@@ -20,8 +20,10 @@
     "permanent": "Permanent",
     "permanents": "Permanents",
     "restrictedPlates": "Restricted Plates",
+    "record" : "Record",
+    "records" : "Records",
+    
 
-        
     "id": "ID",
     "name" : "Name",
     "password": "Password",
@@ -84,6 +86,13 @@
     "saturdayEndTime" : "Saturday End Time",
     "sundayStartTime" : "Sunday Start Time",
     "sundayEndTime" : "Sunday End Time",
+    "recordPath": "Record Path",
+    "duration": "Duration",
+    "remoteUser" : "Remote User",
+    "remotePassword" : "Remote Password",
+    "gatewayIp" : "Gateway Ip",
+    "gatewayPort" : "Gateway Port",
+    "serverRemoto" : "Remote Server",
 
     "filter": "Filter",
     "availableEquipments": "Available Equipments",

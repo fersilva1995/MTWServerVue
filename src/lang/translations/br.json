@@ -20,6 +20,8 @@
     "permanent": "Permanente",
     "permanents": "Permanentes",
     "restrictedPlates": "Placas Restritas",
+    "record" : "Gravação",
+    "records" : "Gravações",
     
     
     "id": "ID",
@@ -84,6 +86,13 @@
     "saturdayEndTime" : "Fim Sábado",
     "sundayStartTime" : "Comço Domingo",
     "sundayEndTime" : "Fim Domingo",
+    "recordPath": "Caminho Gravação",
+    "duration": "Duração",
+    "remoteUser" : "Usuário Remoto",
+    "remotePassword" : "Senha Remoto",
+    "gatewayIp" : "IP de Gateway",
+    "gatewayPort" : "Porta de Gateway",
+    "serverRemoto" : "Servidor Remoto",
  
     
     "filter": "Filtro",

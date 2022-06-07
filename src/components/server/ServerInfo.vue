@@ -2,7 +2,13 @@
   <div>
     <h2>{{ element.login }}</h2>
 
+
+
     <b-form inline>
+        <div class="specialControl">
+            <equipmentObjectSelect :disabled="updateElement" name="equipment" selectedComponent="EquipmentComponent" :dt="translatedElements" :el="element.id"  @change="change"></equipmentObjectSelect>
+        </div>
+
         <div class="control mb-2 mr-2 ml-2">
             <label for="lprRecord">{{ $i18n.t('lprRecord') }}</label>
             <input type="checkbox" id="lprRecord" autocomplete="off" v-model.lazy="element.telemetryServer" />
@@ -58,8 +64,10 @@
 <script>
 
 import Button from "../shared/button/Button.vue";
+import ObjectSelect from "../shared/select/ObjectSelect.vue";
 import RelationTable from "../shared/table/RelationTable.vue";
 import Element from "../../domain/server/Server";
+import Equipment from "../../domain/equipment/Equipment";
 import Service from "../../domain/server/ServerService"
 import GroupService from "../../domain/group/GroupService";
 import EquipmentService from "../../domain/equipment/EquipmentService";
@@ -69,24 +77,49 @@ export default {
   components: {
     myButton: Button,
     relationTable: RelationTable,
+    equipmentObjectSelect: ObjectSelect,
   },
 
   props: {
     id: 0,
     row: '',
+    array: [],
   },
 
   data() {
     return {
+      updateElement: this.id > 0,
       element: new Element(),
       profiles:  [],
+      baseElements: this.array,
+      baseEquipments:[],
       equipments: [],
       groups: [],
       showProfileInfo: false,
     };
   },
 
+  computed: {
+    translatedElements() {
+      
+      if(this.baseElements !== undefined && !this.updateElement) {
+        return this.baseEquipments.filter((el) => {
+          if(!this.baseElements.map(e => e.id).includes(el.id)) {
+            return el;
+          }
+        })
+      } else {
+        return this.baseEquipments;
+      }
+     
+    }
+  },
+
   methods: {
+
+    change(newValue) {
+      this.element = new Element(newValue);
+    },
 
     update() {
 
@@ -95,7 +128,7 @@ export default {
       var el = this.element;
    
       this.service
-      .update(el)
+      .update(el, this.updateElement)
       .then((element) => {
 
         if(this.element.id <= 0) {
@@ -132,12 +165,13 @@ export default {
         .then(function(element) {
 
           console.log(element);
-          2
+          
           this.element = element;
           this.equipmentService
             .list()
             .then(function(equipments) { 
                 
+              this.baseEquipments = equipments;
               var idList = this.element.serverEquipments.map(e => e.id);
               equipments.forEach(eqp => {
                 var state = true;
@@ -148,7 +182,7 @@ export default {
                 })
 
                 if(state) { 
-                    this.equipments.push(eqp);
+                  this.equipments.push(eqp);
                 }
               })
             },
@@ -180,13 +214,12 @@ export default {
       this.equipmentService
         .list()
         .then(function(equipments) { 
+          this.baseEquipments = equipments;
           this.equipments = equipments;
 
           this.equipments.forEach(el => {
             el.groups = [];
           })
-
-          console.log(this.equipments);
         },
         (err) => console.log(err));
 
@@ -198,14 +231,11 @@ export default {
           this.groups.forEach(el => {
             el.equipments = [];
           })
-          console.log(this.groups);
         },
         (err) => console.log(err));
     }
     
     console.log(this.element);
-
-   
   },
 };
 </script>

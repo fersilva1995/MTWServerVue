@@ -20,7 +20,7 @@
       <template #row-details="row">
         <b-card>
           <b-row class="mb-3">
-            <component :row=row :is="currentComponent" :id="row.item.id" @addAction="AddAction" @removeAction="RemoveAction"></component>
+            <component :row=row :is="currentComponent" :id="row.item.id" :array="translateItens" @addAction="AddAction" @removeAction="RemoveAction"></component>
           </b-row>
         </b-card>
       </template>
@@ -43,6 +43,9 @@ import PeriodComponent from '../../period/PeriodInfo.vue';
 import ScheduleComponent from '../../schedule/ScheduleInfo.vue';
 import PermanentComponent from '../../permanent/PermanentInfo.vue';
 import RestrictedPlatesComponent from '../../restrictedPlates/RestrictedPlatesInfo.vue';
+import RecordComponent from '../../record/RecordInfo.vue';
+import TelemetryComponent from '../../telemetry/TelemetryInfo.vue';
+import GatewayComponent from '../../gateway/GatewayInfo.vue';
 
 export default {
 
@@ -59,7 +62,9 @@ export default {
     ScheduleComponent: ScheduleComponent,
     PermanentComponent: PermanentComponent,
     RestrictedPlatesComponent: RestrictedPlatesComponent,
-
+    RecordComponent: RecordComponent,
+    TelemetryComponent: TelemetryComponent,
+    GatewayComponent: GatewayComponent,
   },
 
   props: {
@@ -108,10 +113,13 @@ export default {
 
     AddAction(newElement) {
 
+      console.log("newElement");
       console.log(newElement);
+      
       if(!newElement.update) {
         this.translatedItens[this.translatedItens.length-1] = newElement.value;
         this.translatedItens.push(newElement.element);
+       
       } else {
         this.translatedItens.forEach((element, index, array) => {
           if(element.id === newElement.value.id) {
@@ -119,6 +127,8 @@ export default {
           }
         })
       }
+
+      this.$emit('update', { value: newElement.value, update: newElement.update, element: newElement.element});
 
       newElement.row.toggleDetails();
       this.refresh = !this.refresh;
