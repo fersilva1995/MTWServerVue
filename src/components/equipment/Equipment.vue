@@ -25,7 +25,7 @@ export default {
   },
 
   created() {
-    this.service = new Service(this.$resource);
+    this.service = new Service(this.$resource, this.$session);;
 
     this.service
       .list()

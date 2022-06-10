@@ -20,7 +20,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueSession);
 
-const router = new VueRouter({ 
+export const router = new VueRouter({ 
   routes,
   mode: 'history'
 });
@@ -30,9 +30,12 @@ router.beforeEach((to, from, next) => {
   return next()
 })
 
-new Vue({
+export const vue = new Vue({
   el: '#app',
   router,
   i18n,
   render: h => h(App)
 })
+
+
+

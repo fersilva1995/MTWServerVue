@@ -36,10 +36,18 @@
 
 
 <script>
+import Service from '../../../domain/user/User';
 
-    export default {
-        props : ['routes']
+  export default {
+    props : {
+      routes: []
+    },
+
+    created() {
+      this.service = new Service(this.$resource);
     }
+
+  }
 
 
 </script>

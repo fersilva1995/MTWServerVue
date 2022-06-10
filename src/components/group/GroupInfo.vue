@@ -96,8 +96,8 @@ export default {
   },
 
   created() {
-    this.equipmenteService = new EquipmentService(this.$resource);
-    this.service = new Service(this.$resource);
+    this.equipmenteService = new EquipmentService(this.$resource, this.$session);;
+    this.service = new Service(this.$resource, this.$session);;
 
     if(this.id) {
       this.service

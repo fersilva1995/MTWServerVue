@@ -4,13 +4,13 @@
             <b-col>
                 <form class="center">
                     <div class="login">
-                        <h3>SIGN IN</h3>
                         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                            <h3 class="textCenter">SIGN IN</h3>
                             <b-form-group id="usernameInput" label-for="username" class="form">
-                                <b-form-input id="username" v-model="form.name" :placeholder="$i18n.t('usernameLabel')" required class="input"></b-form-input>
+                                <b-form-input id="username" v-model="form.username" :placeholder="$i18n.t('usernameLabel')" required class="input"></b-form-input>
                             </b-form-group>
                             <b-form-group id="passwordInput" label-for="password" class="form">
-                                <b-form-input id="password" v-model="form.email" type="password" :placeholder="$i18n.t('passwordLabel')" required class="input"></b-form-input>
+                                <b-form-input id="password" v-model="form.password" type="password" :placeholder="$i18n.t('passwordLabel')" required class="input"></b-form-input>
                             </b-form-group>
                             <myButton type="button" title="Login" buttonStyle="outline-primary" @buttonAction="login()"></myButton>
                             <div>
@@ -25,12 +25,29 @@
 </template>
 
 <script>
-import {i18n} from '../../lang/lang';
+import Service from '../../domain/user/UserService'
 import Button from '../shared/button/Button.vue'
 import Label from '../shared/label/Label.vue'
+import Equipment from '../equipment/Equipment.vue';
+import User from '../user/User.vue';
+import Group from '../group/Group.vue';
+import Profile from '../profile/Profile.vue';
+import Server from '../server/Server.vue';
+import Vehicle from '../vehicle/Vehicle.vue';
+import Period from '../period/Period.vue';
+import Visitor from '../visitor/Visitor.vue';
+import Schedule from '../schedule/Schedule.vue';
+import Permanent from '../permanent/Permanent.vue';
+import RestrictedPlates from '../restrictedPlates/RestrictedPlates.vue';
+import Record from '../record/Record.vue';
+import Telemetry from '../telemetry/Telemetry.vue';
 
 
 export default {
+
+    props: {
+        routes: [],
+    },
 
     components: {
         'myButton' : Button,
@@ -40,10 +57,8 @@ export default {
     data() {
         return{
             form: {
-                email: '',
-                name: '',
-                food: null,
-                checked: []
+                username: '',
+                password: '',
             },
             show: true,
         }
@@ -57,12 +72,8 @@ export default {
 
         onReset(event) {
             event.preventDefault()
-            // Reset our form values
-            this.form.email = ''
-            this.form.name = ''
-            this.form.food = null
-            this.form.checked = []
-            // Trick to reset/clear native browser form validation state
+            this.form.username = ''
+            this.form.password = ''
             this.show = false
             this.$nextTick(() => {
                 this.show = true
@@ -71,7 +82,96 @@ export default {
         },
 
         login() {
+
+            console.log(this.form);
+            
+            this.service.search(this.form.username, this.form.password)
+            .then(function(element) {
+                
+                console.log(element);
+                
+                if(element.id > 0) {
+
+                    if(element.id == 1) {
+                        console.log("route");
+                        console.log(this.$router.options.routes);
+                        this.$router.addRoutes([
+                            { path: '/equipment', component: Equipment, title: 'equipment', icon: 'nav-icon fas fa-cubes' },
+                            { path: '/profile', component: Profile, title: 'profile', icon: 'nav-icon fas fa-user' },
+                            { path: '/user', component: User, title: 'user', icon: 'nav-icon fas fa-users' },
+                            { path: '/servers', component: Server, title: 'server', icon: 'nav-icon fas fa-server' },
+                            { path: '/group', component: Group, title: 'group', icon: 'nav-icon fas fa-object-group' },
+                            { path: '/vehicle', component: Vehicle, title: 'vehicle', icon: 'nav-icon fas fa-car' },
+                            { path: '/period', component: Period, title: 'period', icon: 'nav-icon fas fa-hourglass-start' },
+                            { path: '/visitor', component: Visitor, title: 'visitor', icon: 'nav-icon fas fa-retweet' },
+                            { path: '/schedule', component: Schedule, title: 'schedule', icon: 'nav-icon fas fa-calendar' },
+                            { path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' },
+                            { path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' },
+                            { path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' },
+                            { path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' }
+                        ]);
+                      
+                        this.$router.options.routes.push({ path: '/equipment', component: Equipment, title: 'equipment', icon: 'nav-icon fas fa-cubes' });
+                        this.$router.options.routes.push({ path: '/profile', component: Profile, title: 'profile', icon: 'nav-icon fas fa-user' });
+                        this.$router.options.routes.push({ path: '/user', component: User, title: 'user', icon: 'nav-icon fas fa-users' });
+                        this.$router.options.routes.push({ path: '/servers', component: Server, title: 'server', icon: 'nav-icon fas fa-server' });
+                        this.$router.options.routes.push({ path: '/group', component: Group, title: 'group', icon: 'nav-icon fas fa-object-group' });
+                        this.$router.options.routes.push({ path: '/vehicle', component: Vehicle, title: 'vehicle', icon: 'nav-icon fas fa-car' });
+                        this.$router.options.routes.push({ path: '/period', component: Period, title: 'period', icon: 'nav-icon fas fa-hourglass-start' });
+                        this.$router.options.routes.push({ path: '/visitor', component: Visitor, title: 'visitor', icon: 'nav-icon fas fa-retweet' });
+                        this.$router.options.routes.push({ path: '/schedule', component: Schedule, title: 'schedule', icon: 'nav-icon fas fa-calendar' });
+                        this.$router.options.routes.push({ path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' });
+                        this.$router.options.routes.push({ path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' });
+                        this.$router.options.routes.push({ path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' });
+                        this.$router.options.routes.push({ path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' });
+
+
+                        console.log(this.$router.options.routes);
+                    } else {
+                       /* if(element.lprRecord) {}
+                        if(element.acessRecord) {}
+                        if(element.acessPermanent) {this.routes.push({ path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' });}
+                        if(element.acessVisitor) {this.routes.push({ path: '/visitor', component: Visitor, title: 'visitor', icon: 'nav-icon fas fa-retweet' });}
+                        if(element.acessModel) {this.routes.push({ path: '/vehicle', component: Vehicle, title: 'vehicle', icon: 'nav-icon fas fa-car' });}
+                        if(element.acessPeriod) {this.routes.push({ path: '/period', component: Period, title: 'period', icon: 'nav-icon fas fa-hourglass-start'});}
+                        if(element.acessSchedule) {this.routes.push({ path: '/schedule', component: Schedule, title: 'schedule', icon: 'nav-icon fas fa-calendar' });}
+                        if(element.acessOrigin) {}
+                        if(element.acessAction) {}
+                        if(element.acessRestrictedPlate) { this.routes.push({ path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' });}
+                        if(element.acessLpr) {}
+                        if(element.acessAnalyzer) {}
+                        if(element.acessCameraControl ) {}
+                        if(element.acessMasterEye) {}
+                        if(element.acessTelemetry) {this.routes.push({ path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' });}
+                        if(element.acessRecordVideo) {this.routes.push({ path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' });}
+                        if(element.acessAlarm) {}
+                        if(element.acessAddEquipament) {}
+                        if(element.acessRemoveEquipment) {}
+                        if(element.acessEditEquipment) {}
+                        if(element.acessAddGroup) {}
+                        if(element.acessRemoveGroup) {}
+                        if(element.acessEditGroup) {}*/
+                    }
+  
+         
+                    
+
+                    this.$emit('logginAttempt', true);     
+                    this.$session.set('loggedId', element.id);               
+                    setTimeout(() => {
+                       this.$router.push({ path: '/equipment' });
+                    }, 1000)
+                }
+            })
         }
+    },
+
+    created() {
+        this.service = new Service(this.$resource);
+        if(this.$session.get('logged')) {
+            this.$router.push({ path: '/equipment' });
+        }
+
     }
 
 }
@@ -99,10 +199,13 @@ export default {
 
     .center {
         position: absolute;
-        top: 35%;
+        margin-top: 30%;
         right: 0px;
-        bottom: 0px;
         left: 0px;
+    }
+
+    .textCenter {
+        left: 100px;
     }
 
     .center .login {

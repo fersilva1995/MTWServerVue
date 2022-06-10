@@ -116,5 +116,7 @@
     "errorList" : "Não foi possível obter a lista de dados",
     "createAccount": "Não tem conta ainda? Crie agora.",
     "show": "Mostrar",
-    "hide": "Esconder"
+    "hide": "Esconder",
+    "usernameLabel" : "Usuário",
+    "passwordLabel" : "Senha"
 }

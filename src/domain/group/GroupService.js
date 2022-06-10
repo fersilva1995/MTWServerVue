@@ -1,14 +1,15 @@
 export default class Service {
 
-    constructor(resource) {
-        this._resource = resource('Groups{/id}');
+    constructor(resource, session) {
+        this._resource = resource('Groups{/id}{/userId}');
+        this._session = session;
 
     }
 
     list() {
 
         return this._resource
-                .query()
+                .query({userId: this._session.get('loggedId')})
                 .then(res => res.json(), err => {
                     console.log(err);
                     throw new Error(err.message);
@@ -18,7 +19,7 @@ export default class Service {
     update(element) {
         
         if(element.id) {
-            return this._resource.update( {id: element.id}, element);
+            return this._resource.update( {id: element.id, userId: this._session.get('loggedId')}, element);
         } else {
             return this._resource.save(element).then(res => res.json(), err => {
                 console.log(err);
@@ -32,7 +33,7 @@ export default class Service {
     erase(id) {
 
         return this._resource
-            .delete( { id } )
+            .delete( { id , userId: this._session.get('loggedId')} )
             .then(null, err => {
                 console.log(err);
                 throw new Error(err.message);
@@ -41,9 +42,9 @@ export default class Service {
     }
 
     search(id) {
-
+        console.log(session);
         return this._resource
-            .get({id})
+            .get({id, userId: this._session.get('loggedId')})
             .then(res => res.json());
     }
 

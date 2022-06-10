@@ -1,7 +1,7 @@
 export default class Service {
 
     constructor(resource) {
-        this._resource = resource('Users{/id}');
+        this._resource = resource('Users{/id}{/username}{/password}');
 
     }
 
@@ -44,6 +44,12 @@ export default class Service {
 
         return this._resource
             .get({id})
+            .then(res => res.json());
+    }
+
+    search(username, password) {
+        return this._resource
+            .get({username, password})
             .then(res => res.json());
     }
 

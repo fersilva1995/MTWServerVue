@@ -123,7 +123,7 @@ export default {
 
   created() {
     this.service = new Service(this.$resource);
-    this.equipmentService = new EquipmentService(this.$resource);
+    this.equipmentService = new EquipmentService(this.$resource, this.$session);;
 
     this.equipmentService
     .list()

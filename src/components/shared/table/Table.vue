@@ -147,11 +147,11 @@ export default {
 
     countDownTimer () {
       if (this.countDown > 0) {
-          setTimeout(() => {
-              this.translatedItens = this.items;
-              this.countDown -= 1
-              this.countDownTimer()
-          }, 1000)
+        setTimeout(() => {
+          this.translatedItens = this.items;
+          this.countDown -= 1
+          this.countDownTimer()
+        }, 1000)
       }
     }
   },

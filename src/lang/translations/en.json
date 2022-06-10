@@ -114,7 +114,10 @@
     "errorList" : "Could not obtain list of data",
     "createAccount": "Don't have an account yet? Sign up.",
     "show": "Show",
-    "hide": "Hide"
+    "hide": "Hide",
+    "usernameLabel" : "Username",
+    "passwordLabel" : "Password"
+    
     
 }
 
