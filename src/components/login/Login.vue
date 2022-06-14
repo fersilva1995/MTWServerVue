@@ -92,9 +92,12 @@ export default {
                 
                 if(element.id > 0) {
 
+                    console.log("route");
+                    console.log(this.$router.options.routes);
+                    console.log(element);
+
                     if(element.id == 1) {
-                        console.log("route");
-                        console.log(this.$router.options.routes);
+                     
                         this.$router.addRoutes([
                             { path: '/equipment', component: Equipment, title: 'equipment', icon: 'nav-icon fas fa-cubes' },
                             { path: '/profile', component: Profile, title: 'profile', icon: 'nav-icon fas fa-user' },
@@ -125,37 +128,36 @@ export default {
                         this.$router.options.routes.push({ path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' });
                         this.$router.options.routes.push({ path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' });
 
-
-                        console.log(this.$router.options.routes);
                     } else {
-                       /* if(element.lprRecord) {}
-                        if(element.acessRecord) {}
-                        if(element.acessPermanent) {this.routes.push({ path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' });}
-                        if(element.acessVisitor) {this.routes.push({ path: '/visitor', component: Visitor, title: 'visitor', icon: 'nav-icon fas fa-retweet' });}
-                        if(element.acessModel) {this.routes.push({ path: '/vehicle', component: Vehicle, title: 'vehicle', icon: 'nav-icon fas fa-car' });}
-                        if(element.acessPeriod) {this.routes.push({ path: '/period', component: Period, title: 'period', icon: 'nav-icon fas fa-hourglass-start'});}
-                        if(element.acessSchedule) {this.routes.push({ path: '/schedule', component: Schedule, title: 'schedule', icon: 'nav-icon fas fa-calendar' });}
-                        if(element.acessOrigin) {}
-                        if(element.acessAction) {}
-                        if(element.acessRestrictedPlate) { this.routes.push({ path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' });}
-                        if(element.acessLpr) {}
-                        if(element.acessAnalyzer) {}
-                        if(element.acessCameraControl ) {}
-                        if(element.acessMasterEye) {}
-                        if(element.acessTelemetry) {this.routes.push({ path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' });}
-                        if(element.acessRecordVideo) {this.routes.push({ path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' });}
-                        if(element.acessAlarm) {}
-                        if(element.acessAddEquipament) {}
-                        if(element.acessRemoveEquipment) {}
-                        if(element.acessEditEquipment) {}
-                        if(element.acessAddGroup) {}
-                        if(element.acessRemoveGroup) {}
-                        if(element.acessEditGroup) {}*/
-                    }
-  
-         
-                    
+                        if(element.profile.lprRecord) {}
+                        if(element.profile.acessRecord) {}
+                        if(element.profile.acessPermanent) {this.$router.options.routes.push({ path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' });}
+                        if(element.profile.acessVisitor) {this.$router.options.routes.push({ path: '/visitor', component: Visitor, title: 'visitor', icon: 'nav-icon fas fa-retweet' });}
+                        if(element.profile.acessModel) {this.$router.options.routes.push({ path: '/vehicle', component: Vehicle, title: 'vehicle', icon: 'nav-icon fas fa-car' });}
+                        if(element.profile.acessPeriod) {this.$router.options.routes.push({ path: '/period', component: Period, title: 'period', icon: 'nav-icon fas fa-hourglass-start'});}
+                        if(element.profile.acessSchedule) {this.$router.options.routes.push({ path: '/schedule', component: Schedule, title: 'schedule', icon: 'nav-icon fas fa-calendar' });}
+                        if(element.profile.acessOrigin) {}
+                        if(element.profile.acessAction) {}
+                        if(element.profile.acessRestrictedPlate) { console.log('restricted'); this.$router.options.routes.push({ path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' });}
+                        if(element.profile.acessLpr) {}
+                        if(element.profile.acessAnalyzer) {}
+                        if(element.profile.acessCameraControl ) {}
+                        if(element.profile.acessMasterEye) {}
+                        if(element.profile.acessTelemetry) {this.$router.options.routes.push({ path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' });}
+                        if(element.profile.acessRecordVideo) {this.$router.options.routes.push({ path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' });}
+                        if(element.profile.acessAlarm) {}
+                        if(element.profile.acessAddEquipament) {}
+                        if(element.profile.acessRemoveEquipment) {}
+                        if(element.profile.acessEditEquipment) {}
+                        if(element.profile.acessAddGroup) {}
+                        if(element.profile.acessRemoveGroup) {}
+                        if(element.profile.acessEditGroup) {}
 
+                        this.$router.addRoutes(this.$router.options.routes);
+                    }
+
+                    console.log(this.$router.options.routes);
+  
                     this.$emit('logginAttempt', true);     
                     this.$session.set('loggedId', element.id);               
                     setTimeout(() => {
