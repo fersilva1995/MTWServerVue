@@ -19,7 +19,7 @@ export default class Service {
     update(element) {
         
         if(element.id) {
-            return this._resource.update( {id: element.id, userId: this._session.get('loggedId')}, element);
+            return this._resource.update( {id: element.id}, element);
         } else {
             return this._resource.save(element);
         }

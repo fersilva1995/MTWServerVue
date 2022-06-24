@@ -41,7 +41,7 @@ import Permanent from '../permanent/Permanent.vue';
 import RestrictedPlates from '../restrictedPlates/RestrictedPlates.vue';
 import Record from '../record/Record.vue';
 import Telemetry from '../telemetry/Telemetry.vue';
-
+import DVC from '../dvc/DVC.vue';
 
 export default {
 
@@ -111,7 +111,8 @@ export default {
                             { path: '/permanent', component: Permanent, title: 'permanent', icon: 'nav-icon fas fa-reply-all' },
                             { path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' },
                             { path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' },
-                            { path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' }
+                            { path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' },
+                            { path: '/dvc', component: DVC, title: 'dvc', icon: 'nav-icon fas fa-clone' }
                         ]);
                       
                         this.$router.options.routes.push({ path: '/equipment', component: Equipment, title: 'equipment', icon: 'nav-icon fas fa-cubes' });
@@ -127,6 +128,7 @@ export default {
                         this.$router.options.routes.push({ path: '/restrictedPlates', component: RestrictedPlates, title: 'restrictedPlates', icon: 'nav-icon fas fa-ban' });
                         this.$router.options.routes.push({ path: '/record', component: Record, title: 'record', icon: 'nav-icon fas fa-clone' });
                         this.$router.options.routes.push({ path: '/telemetry', component: Telemetry, title: 'telemetry', icon: 'nav-icon fas fa-clone' });
+                        this.$router.options.routes.push({ path: '/dvc', component: DVC, title: 'dvc', icon: 'nav-icon fas fa-clone' });
 
                     } else {
                         if(element.profile.lprRecord) {}

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import VueI18n from 'vue-i18n';
 import VueSession from "vue-session";
+import DataTable from '../src/components/shared/table/Table.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { routes } from './routes';
 import { i18n } from './lang/lang'
@@ -19,6 +20,7 @@ Vue.use(VueI18n);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueSession);
+Vue.component('dataTable', DataTable);
 
 export const router = new VueRouter({ 
   routes,

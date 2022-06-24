@@ -46,6 +46,7 @@ import RestrictedPlatesComponent from '../../restrictedPlates/RestrictedPlatesIn
 import RecordComponent from '../../record/RecordInfo.vue';
 import TelemetryComponent from '../../telemetry/TelemetryInfo.vue';
 import GatewayComponent from '../../gateway/GatewayInfo.vue';
+import DVCComponent from '../../dvc/DVCInfo.vue';
 
 export default {
 
@@ -65,6 +66,7 @@ export default {
     RecordComponent: RecordComponent,
     TelemetryComponent: TelemetryComponent,
     GatewayComponent: GatewayComponent,
+    DVCComponent: DVCComponent,
   },
 
   props: {

@@ -15,9 +15,9 @@ export default class Service {
             });
     }
 
-    update(element) {
+    update(element, updateElement) {
         
-        if(element.id) {
+        if(element.id && updateElement) {
             return this._resource.update( {id: element.id}, element);
         } else {
             return this._resource.save(element);

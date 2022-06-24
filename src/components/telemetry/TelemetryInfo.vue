@@ -30,7 +30,6 @@
 
 import Button from "../shared/button/Button.vue";
 import ObjectSelect from "../shared/select/ObjectSelect.vue";
-import DataTable from "../shared/table/Table.vue";
 import Element from "../../domain/telemetry/Telemetry";
 import Gateway from "../../domain/gateway/Gateway";
 import Service from "../../domain/telemetry/TelemetryService";
@@ -43,7 +42,6 @@ export default {
   components: {
     myButton: Button,
     equipmentObjectSelect: ObjectSelect,
-    dataTable: DataTable,
   },
 
   props: {
@@ -74,7 +72,6 @@ export default {
       } else {
         return this.baseEquipments;
       }
-     
     }
   },
 
@@ -120,14 +117,14 @@ export default {
 
   created() {
     this.service = new Service(this.$resource);
-    this.equipmentService = new EquipmentService(this.$resource);
+    this.equipmentService = new EquipmentService(this.$resource, this.$session);
 
     this.equipmentService
     .list()
     .then(function(equipments) { 
       this.baseEquipments = equipments;
     },
-    (err) => console.log(err));
+    (err) => console.log("erro:" + err));
 
     if(this.id) {
       this.service
