@@ -100,6 +100,9 @@ export default {
         "NVR",
         "DVR",
         "HD",
+        "Terminal",
+        "DVC",
+        "Micro-Computador",
         "Outro"
       ],
     };

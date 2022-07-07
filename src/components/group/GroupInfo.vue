@@ -12,6 +12,11 @@
         <label for="time">{{ $i18n.t('time') }}</label>
         <input id="time" autocomplete="off" v-model.lazy="element.time" />
       </div>
+
+      <div class="control mb-2 mr-2 ml-2">
+        <label for="type">{{ $i18n.t('type') }}</label>
+        <input id="type" autocomplete="off" v-model.lazy="element.type" />
+      </div>
     </b-form>
 
     <relationTable :initAvaiableElements="equipments" :initInsertedElements="element.equipments" @updateRelation="(elements) => { this.element.equipments = elements.elements }"></relationTable>
