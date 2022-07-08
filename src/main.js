@@ -5,6 +5,7 @@ import VueResource from 'vue-resource';
 import VueI18n from 'vue-i18n';
 import VueSession from "vue-session";
 import DataTable from '../src/components/shared/table/Table.vue'
+import ObjectSelect from "../src/components/shared/select/ObjectSelect.vue";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { routes } from './routes';
 import { i18n } from './lang/lang'
@@ -21,6 +22,8 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueSession);
 Vue.component('dataTable', DataTable);
+Vue.component('equipmentObjectSelect', ObjectSelect);
+Vue.component('objectSelect', ObjectSelect);
 
 export const router = new VueRouter({ 
   routes,

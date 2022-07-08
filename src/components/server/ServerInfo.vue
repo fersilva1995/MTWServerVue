@@ -64,7 +64,6 @@
 <script>
 
 import Button from "../shared/button/Button.vue";
-import ObjectSelect from "../shared/select/ObjectSelect.vue";
 import RelationTable from "../shared/table/RelationTable.vue";
 import Element from "../../domain/server/Server";
 import Equipment from "../../domain/equipment/Equipment";
@@ -77,7 +76,6 @@ export default {
   components: {
     myButton: Button,
     relationTable: RelationTable,
-    equipmentObjectSelect: ObjectSelect,
   },
 
   props: {
@@ -132,7 +130,7 @@ export default {
       .then((element) => {
 
         if(this.element.id <= 0) {
-          this.element = element;
+          this.element = element.body;
           this.$emit('addAction', { row: this.row, value: this.element, update: false, element: new Element()});
         } else {
           this.$emit('addAction', { row: this.row, value: this.element, update: true, element: new Element()});

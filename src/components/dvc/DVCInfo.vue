@@ -137,9 +137,9 @@ export default {
         if(this.element.id <= 0) {
           this.element = element;
 
-          this.$emit('addAction', { row: this.row, value: this.element, update: false, element: new Element()});
+          this.$emit('addAction', { row: this.row, value: this.element, update: this.updateElement, element: new Element()});
         } else {
-          this.$emit('addAction', { row: this.row, value: this.element, update: true, element: new Element()});
+          this.$emit('addAction', { row: this.row, value: this.element, update: this.updateElement, element: new Element()});
         }
   
       }, (err) => console.log(err));  
@@ -163,8 +163,6 @@ export default {
     this.serverService = new ServerService(this.$resource);
     this.telemetryService = new TelemetryService(this.$resource);
     this.equipmentService = new EquipmentService(this.$resource, this.$session);
-
-
     this.equipmentService
       .list()
       .then(function(equipments) { 

@@ -133,7 +133,8 @@ export default {
         .update(this.element)
         .then((equipment) => {
           if(this.element.id <= 0) {
-            this.element = equipment;
+            this.element = equipment.body;
+            console.log(equipment);
             this.$emit('addAction', { row: this.row, value: this.element, update: false, element: new Element()});
           } else {
             this.$emit('addAction', { row: this.row, value: this.element, update: true, element: new Element()});

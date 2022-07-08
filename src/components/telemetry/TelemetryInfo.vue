@@ -29,7 +29,6 @@
 <script>
 
 import Button from "../shared/button/Button.vue";
-import ObjectSelect from "../shared/select/ObjectSelect.vue";
 import Element from "../../domain/telemetry/Telemetry";
 import Gateway from "../../domain/gateway/Gateway";
 import Service from "../../domain/telemetry/TelemetryService";
@@ -41,7 +40,6 @@ export default {
 
   components: {
     myButton: Button,
-    equipmentObjectSelect: ObjectSelect,
   },
 
   props: {
